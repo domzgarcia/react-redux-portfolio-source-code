@@ -1,0 +1,19 @@
+#headerNav {
+    background-color: #fff;
+}
+#headerNav .list {
+    margin: 0;
+    padding: 0;
+}
+#headerNav .list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+#headerNav .list .link {
+    padding: 5px 10px;
+    width: 250px;
+    margin: 2px;
+    display: inline-block;
+    background: #bbb;
+ }

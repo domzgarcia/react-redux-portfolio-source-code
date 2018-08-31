@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+
+        "baseUrl": "./",  // all paths are relative to the baseUrl
+        "paths": {
+            "Actions/*" : ["src/Actions/*"],
+            "Assets/*" : ["src/Assets/*"],
+            "Components/*" : ["src/Components/*"],
+            "Containers/*" : ["src/Containers/*"],
+            "Reducers/*" : ["src/Reducers/*"],
+            "Services/*" : ["src/Services/*"],
+            "Utilities/*" : ["src/Utilities/*"],
+            // resolve any `~/foo/bar` to `<baseUrl>/foo/bar`
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
