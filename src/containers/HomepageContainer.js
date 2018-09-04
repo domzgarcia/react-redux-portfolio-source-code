@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 import logo from '../logo.svg';
 import '../App.css';
@@ -9,8 +9,10 @@ import HeaderContainer from 'Containers/HeaderContainer.js';
 import FooterContainer from 'Containers/FooterContainer.js';
 
 import AboutContainer from 'Containers/AboutContainer.js';
-import ShowcaseContainer from 'Containers/ShowcaseContainer.js';
 import ContactUsContainer from 'Containers/ContactUsContainer.js';
+import DashboardContainer from 'Containers/DashboardContainer';
+
+import showcaseRoutes from 'Components/showcase';
 
 class HomepageContainer extends Component {
     constructor(props){
@@ -21,24 +23,22 @@ class HomepageContainer extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
                 </div>
-
+                
                 {/*Modal*/}
-
+                
                 {/*Header*/}
                 <HeaderContainer />
 
                 {/*Body*/}
-                
-                <pre>Hello world</pre>
-
                 <Switch>
+                    <Route exact path='/' component={DashboardContainer}/>
                     <Route path='/about' component={AboutContainer}/>
-                    <Route path='/showcase' component={ShowcaseContainer}/>
                     <Route path='/contact-us' component={ContactUsContainer}/>
                 </Switch>
-                
+
+                {showcaseRoutes}
+
                 {/*Footer*/}
                 <FooterContainer />
             </div>

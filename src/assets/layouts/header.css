@@ -1,5 +1,5 @@
 #headerNav {
-    background-color: #fff;
+    background-color: #444;
 }
 #headerNav .list {
     margin: 0;
@@ -12,7 +12,6 @@
 }
 #headerNav .list .link {
     padding: 5px 10px;
-    width: 250px;
     margin: 2px;
     display: inline-block;
     background: #bbb;

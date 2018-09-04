@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-class ShowcaseContainer extends Component {
+class DashboardContainer extends Component {
     constructor(props){
         super(props);
     }
     render(){
         return (
-            <h1>Showcase Page</h1>
+            <h1>Dashboard</h1>
         )
     }
 }
@@ -19,6 +19,4 @@ const mapDispatchToProps = dispatch => {
     return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowcaseContainer);
-
-// export default ShowcaseContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

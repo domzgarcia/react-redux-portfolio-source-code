@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -31,5 +35,26 @@
   max-width: 1140px;
   width: 100%;
   margin: 0 auto;
-  background-color: #ccc;
+}
+
+.-top-bottom-gutter {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+h1,h2,h3,h4,h5 {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-home {
+  text-align: left;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.page-title {
+  text-align: center;
 }

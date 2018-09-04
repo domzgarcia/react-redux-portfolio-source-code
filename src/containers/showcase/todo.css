@@ -1,0 +1,57 @@
+.pull-right {
+    float: right;
+}
+
+.app-sample {
+    max-width: 450px;
+    width: 100%;
+    margin: 20px auto;
+}
+.top-nav {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: right;
+}
+.btn-add {
+    background-color: rgb(94, 217, 255);
+    border-radius: 5px;
+    padding: 10px;
+    display: inline-block;
+    outline: none;
+}
+.-green {
+    background-color: green !important;
+}
+/* CARD */
+.card {
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+}
+.clearfix {
+    content: ''; 
+    clear: both;
+}
+.card > input[type="text"] {
+    max-width: 100%;
+    width: 100%;
+    font-size: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    padding: 5px 10px;
+}
+.todos {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.todos > .list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}

@@ -10,7 +10,7 @@ class FooterContainer extends Component {
     render(){
         return (
             <div>
-                react footer 2018
+                <pre>React + Redux 2018 sample website made with &#9825;</pre>
             </div>
         )
     }
