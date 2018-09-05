@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router';
-import TodoAppContainer from 'Containers/showcase/TodoAppContainer.js'
+import TodoAppContainer from '../../containers/showcase/todos/TodoAppContainer.js';
 import ShowcaseContainer from 'Containers/showcase/ShowcaseContainer.js';
 
 const routes = (

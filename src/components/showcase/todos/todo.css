@@ -29,12 +29,16 @@
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 10px;
+    display: none;
+}
+.card.-active {
+    display: block;
 }
 .clearfix {
     content: ''; 
     clear: both;
 }
-.card > input[type="text"] {
+.card input[type="text"] {
     max-width: 100%;
     width: 100%;
     font-size: 20px;
@@ -50,7 +54,7 @@
     border-radius: 5px;
     border: 1px solid #ddd;
 }
-.todos > .list {
+.todos .list {
     padding: 0;
     margin: 0;
     list-style: none;
