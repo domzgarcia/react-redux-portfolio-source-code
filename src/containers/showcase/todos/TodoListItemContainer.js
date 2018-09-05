@@ -30,15 +30,23 @@ class TodoListItemContainer extends Component {
         this.props.markedAsDone(evt.target.value);
     }
 
+    componentDidMount(){
+        this.setState({
+            radioVal: this.props.done
+        });
+    }
+
     handleDoubleClick(evt, data, uid){
         this.setState({
             isHidden: true,
             tempText: data,
             tempUID: uid
         });
-        this.tempInput.focus();
 
-        console.log(data, uid);
+        let d = setTimeout(()=> {
+            clearTimeout(d);
+            this.tempInput.focus();
+        }, 100);
     }
 
     handleTempTextChange(evt){

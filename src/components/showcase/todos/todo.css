@@ -59,3 +59,13 @@
     margin: 0;
     list-style: none;
 }
+
+.btn-filters {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.btn-filters button {
+    width: 33%;
+}

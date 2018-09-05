@@ -6,6 +6,7 @@ import {toggleCard, addTodo} from 'Actions/showcase/todos/action.js';
 
 import TodoFormComp from 'Components/showcase/todos/TodoFormComp.js';
 import TodoListContainer from 'Containers/showcase/todos/TodoListContainer.js';
+import TodoFilterContainer from 'Containers/showcase/todos/TodoFilterContainer.js';
 
 class TodoAppContainer extends Component {
     constructor(props){
@@ -24,16 +25,16 @@ class TodoAppContainer extends Component {
 
     handleSubmit(evt){
         if(!!this.state.text.length){
-            this.props.addTodo(this.state.text);    
+            this.props.addTodo(this.state.text); 
+            
+            evt.target.reset();
+            this.setState({text: ''});    
         }
-        evt.target.reset();
-        this.setState({text: ''});
         evt.preventDefault();
     }
     
     render(){
         let {isFormOpen, toggleCard} = this.props;
-
         return (
             <div className="container -top-bottom-gutter align-left">
                 <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
@@ -41,7 +42,7 @@ class TodoAppContainer extends Component {
 
                 <div className="app-sample">
                     <div className="top-nav">
-                        <span>Delete, Firebase, Filters, LocalStorage &nbsp;&nbsp;</span>
+                        <span><strong>Features: </strong>Firebase, Filters, LocalStorage &nbsp;&nbsp;</span>
                         <button className="btn-add" onClick={toggleCard}> &nbsp; { (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
                     </div>
                     <TodoFormComp 
@@ -50,6 +51,8 @@ class TodoAppContainer extends Component {
                         handleChange={this.handleChange}
                     />
                     <TodoListContainer />
+
+                    <TodoFilterContainer />
                 </div>
             </div>
         )

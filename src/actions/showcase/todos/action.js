@@ -2,7 +2,8 @@ import {TOGGLE_CARD,
     ADD_TODO, 
     MARKED_AS_DONE,
     EDIT_TODO,
-    DELETE_TODO
+    DELETE_TODO,
+    TODO_FILTER_CHANGE
 } from 'Actions/showcase/todos/actionType.js';
 
 export const toggleCard = () => {
@@ -40,6 +41,14 @@ export const deleteTodo = (uid) => {
         type: DELETE_TODO,
         payload: {
             uid
+        }
+    }
+}
+export const todoFilterChangeTo = (filter) => {
+    return {
+        type: TODO_FILTER_CHANGE,
+        payload: {
+            filter
         }
     }
 }
