@@ -41,6 +41,7 @@ class TodoAppContainer extends Component {
 
                 <div className="app-sample">
                     <div className="top-nav">
+                        <span>Delete, Firebase, Filters, LocalStorage &nbsp;&nbsp;</span>
                         <button className="btn-add" onClick={toggleCard}> &nbsp; { (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
                     </div>
                     <TodoFormComp 

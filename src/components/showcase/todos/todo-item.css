@@ -3,9 +3,13 @@
     padding: 0px 10px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
 }
 .list-item p {
     margin: 0;
+    max-width: 80%;
+    width: 80%;
 }
 input[type="checkbox"] {
     margin-right: 10px;
@@ -19,8 +23,8 @@ input[type="checkbox"] {
 .tempInput {
     font-size: 20px;
     display: none;
-    max-width: 100%;
-    width: 100%;
+    max-width: 80%;
+    width: 80%;
     border-radius: 5px;
     border: 1px solid #ddd;
     outline: none;
@@ -28,4 +32,14 @@ input[type="checkbox"] {
 }
 .tempInput.-show {
     display: block;
+}
+.btn-delete {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 30px;
 }

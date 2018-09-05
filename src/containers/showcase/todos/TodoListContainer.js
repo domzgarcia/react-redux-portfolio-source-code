@@ -18,7 +18,7 @@ class TodoListContainer extends Component {
                                 key={obj.uid}
                                 {...obj}
                                 />
-                            )  
+                            )
                         }) }
                 </ul>
             </div>

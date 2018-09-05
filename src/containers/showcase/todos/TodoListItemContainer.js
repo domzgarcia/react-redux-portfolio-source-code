@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import 'Components/showcase/todos/todo-item.css';
-import {markedAsDone, editTodo} from 'Actions/showcase/todos/action.js';
+import {markedAsDone, editTodo, deleteTodo} from 'Actions/showcase/todos/action.js';
 
 class TodoListItemContainer extends Component {
     constructor(props){
@@ -10,7 +10,8 @@ class TodoListItemContainer extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleDoubleClick = this.handleDoubleClick.bind(this);
         this.handleTempTextChange = this.handleTempTextChange.bind(this);
-        this.handEditChange = this.handEditChange.bind(this);
+        this.handleEditChange = this.handleEditChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
         this.state = {
             radioVal: false,
@@ -18,6 +19,8 @@ class TodoListItemContainer extends Component {
             tempText: '',
             tempUID: 0
         };
+
+        console.log(this.props);
     }
     
     handleChange(evt){
@@ -33,6 +36,8 @@ class TodoListItemContainer extends Component {
             tempText: data,
             tempUID: uid
         });
+        this.tempInput.focus();
+
         console.log(data, uid);
     }
 
@@ -42,11 +47,15 @@ class TodoListItemContainer extends Component {
         });
     }
 
-    handEditChange(evt){
+    handleEditChange(evt){
         this.setState({isHidden: false});
         if(!!this.state.tempText.length){
             this.props.editTodo(this.state.tempText, this.state.tempUID);
         }
+    }
+
+    handleDelete(uid){
+        this.props.deleteTodo(uid);
     }
 
     render(){
@@ -64,13 +73,17 @@ class TodoListItemContainer extends Component {
 
                 <input value={this.state.tempText} className={"tempInput "+tempInputVisibility}
                     onChange={this.handleTempTextChange}
-                    onKeyPress={ (evt) => {
+
+                    ref={(input) => {
+                        this.tempInput = input;
+                    }}
+                    onKeyPress={(evt) => {
                         if(evt.key==='Enter'){
-                            this.handEditChange();
+                            this.handleEditChange();
                         }
                     }}
                     onBlur={ () =>{
-                        this.handEditChange();
+                        this.handleEditChange();
                     }}
                 />
                 <p className={"item "+isDone+" "+textVisibility} 
@@ -80,6 +93,11 @@ class TodoListItemContainer extends Component {
                         this.handleDoubleClick(e, name, uid);
                     }
                 }>{name}</p>
+
+                <button className="btn-delete" onClick={() => {
+                    this.handleDelete(uid);
+                }}>
+                <span>&#x2612;</span></button>
             </li>
         )
     }
@@ -87,7 +105,8 @@ class TodoListItemContainer extends Component {
 
 const mapDispatchToProps = {
     markedAsDone: markedAsDone,
-    editTodo: editTodo
+    editTodo: editTodo,
+    deleteTodo: deleteTodo
 };
 
 export default connect(null, mapDispatchToProps)(TodoListItemContainer);

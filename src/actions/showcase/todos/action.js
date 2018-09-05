@@ -1,7 +1,8 @@
 import {TOGGLE_CARD, 
     ADD_TODO, 
     MARKED_AS_DONE,
-    EDIT_TODO
+    EDIT_TODO,
+    DELETE_TODO
 } from 'Actions/showcase/todos/actionType.js';
 
 export const toggleCard = () => {
@@ -30,6 +31,14 @@ export const editTodo = (newText, uid) => {
         type: EDIT_TODO,
         payload: {
             newText,
+            uid
+        }
+    }
+}
+export const deleteTodo = (uid) => {
+    return {
+        type: DELETE_TODO,
+        payload: {
             uid
         }
     }
