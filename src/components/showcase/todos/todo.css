@@ -21,7 +21,7 @@
     outline: none;
 }
 .-green {
-    background-color: green !important;
+    background-color:#78d678 !important;
 }
 /* CARD */
 .card {
@@ -68,4 +68,11 @@
 }
 .btn-filters button {
     width: 33%;
+    outline: none;
+}
+
+.btn-all.-active,
+.btn-pending.-active,
+.btn-done.-active {
+    background-color: yellow;
 }

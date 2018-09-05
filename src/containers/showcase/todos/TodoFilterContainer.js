@@ -10,30 +10,43 @@ import {TODO_FILTER_ALL,
 class TodoFilterContainer extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            filter: TODO_FILTER_ALL
+        };
     }
     
     handleSetFilter(filter){
         if(filter === TODO_FILTER_ALL) {
             this.props.todoFilterChangeTo(TODO_FILTER_ALL);
+            this.setState({filter: TODO_FILTER_ALL});
+
         } else if(filter === TODO_FILTER_PENDING){
             this.props.todoFilterChangeTo(TODO_FILTER_PENDING);
+            this.setState({filter: TODO_FILTER_PENDING});
+
         } else if(filter === TODO_FILTER_DONE){
             this.props.todoFilterChangeTo(TODO_FILTER_DONE);
+            this.setState({filter: TODO_FILTER_DONE});
+
         }
     }
 
     render(){
+        let allActive = (this.state.filter === TODO_FILTER_ALL) ? 'btn-all -active' : '';
+        let pendingActive = (this.state.filter === TODO_FILTER_PENDING) ? 'btn-pending -active' : '';
+        let doneActive = (this.state.filter === TODO_FILTER_DONE) ? 'btn-done -active' : '';
+
         return (
             <div className="btn-filters">
-                <button onClick={()=>{
+                <button className={"" +allActive} onClick={()=>{
                     this.handleSetFilter(TODO_FILTER_ALL);
                 }}>All</button>
 
-                <button onClick={()=>{
+                <button className={"" +pendingActive} onClick={()=>{
                     this.handleSetFilter(TODO_FILTER_PENDING);
                 }}>Pending</button>
 
-                <button onClick={()=>{
+                <button className={"" +doneActive} onClick={()=>{
                     this.handleSetFilter(TODO_FILTER_DONE);
                 }}>Done</button>
             </div>

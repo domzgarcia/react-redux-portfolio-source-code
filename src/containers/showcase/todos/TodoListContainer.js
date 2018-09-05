@@ -7,30 +7,27 @@ import {TODO_FILTER_PENDING, TODO_FILTER_DONE} from 'Actions/showcase/todos/acti
 class TodoListContainer extends Component {
     constructor(props){
         super(props);
-        console.log('bbb',this.props);
     }
     render(){
         let {todos, todoFilter} = this.props;
-        console.log(todoFilter);
-
         return (
             <div className="todos">
                 <ul className="list">
-                    {
+                    { // Just copied the code
                         todos
-                            .filter( (obj) => {
+                            .filter( (item) => {
                                 switch(todoFilter){
                                     case TODO_FILTER_PENDING:
-                                        return obj.done === false;
+                                        return item.done === false;
                                     case TODO_FILTER_DONE:
-                                        return obj.done === true;
+                                        return item.done === true;
                                     default:
                                         return true
                                 }
                             })
                             .reverse()
                             .map( (obj, idx) => {
-                                return ( 
+                                return (
                                         <TodoListItemContainer 
                                         key={obj.uid}
                                         {...obj}
@@ -43,20 +40,6 @@ class TodoListContainer extends Component {
         )
     }
 }
-
-/*<div className="todos">
-                <ul className="list">
-                    { todos.map( (obj, idx) => {
-
-                        return ( 
-                                <TodoListItemContainer 
-                                key={obj.uid}
-                                {...obj}
-                                />
-                            )
-                        }) }
-                </ul>
-            </div>*/
 
 const mapStateToProps = (state) => ({
     todos: state.todos,

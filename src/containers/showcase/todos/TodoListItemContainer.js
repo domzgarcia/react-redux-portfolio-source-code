@@ -8,10 +8,10 @@ class TodoListItemContainer extends Component {
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.handleDoubleClick = this.handleDoubleClick.bind(this);
         this.handleTempTextChange = this.handleTempTextChange.bind(this);
-        this.handleEditChange = this.handleEditChange.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
+        // this.handleDoubleClick = this.handleDoubleClick.bind(this);
+        // this.handleEditChange = this.handleEditChange.bind(this);
+        // this.handleDelete = this.handleDelete.bind(this);
 
         this.state = {
             radioVal: false,
@@ -19,8 +19,6 @@ class TodoListItemContainer extends Component {
             tempText: '',
             tempUID: 0
         };
-
-        console.log(this.props);
     }
     
     handleChange(evt){
