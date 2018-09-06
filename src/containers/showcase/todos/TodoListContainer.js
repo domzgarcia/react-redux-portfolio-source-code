@@ -11,7 +11,7 @@ class TodoListContainer extends Component {
     render(){
         let {todos, todoFilter} = this.props;
         let contVisibility = (!!todos.length) ? '-active' : '';
-        
+        // console.log('todos',todos);
         return (
             <div className={"todos "+contVisibility}>
                 <ul className="list">

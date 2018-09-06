@@ -34,10 +34,13 @@ const allStoreEnhancers = compose(
     ...enhancers
 );
 
-firebase.getAll()
-    .then( response => {
-        console.log(response);
-    });
+// firebase.getAll()
+//     .then( response => {
+//         const spreadToArray = Object.keys(response.data.todos).map(function(key) {
+//             return response.data.todos[key];
+//           });
+//         console.log('spreadToArray', spreadToArray);
+//     });
 
 const store = createStore(
     rootReducer,

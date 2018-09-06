@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'react-router-dom/Link';
 
-import {toggleCard, addTodo} from 'Actions/showcase/todos/action.js';
+import {toggleCard, addTodo,fetchFromFirebase} from 'Actions/showcase/todos/action.js';
 
 import TodoFormComp from 'Components/showcase/todos/TodoFormComp.js';
 import TodoListContainer from 'Containers/showcase/todos/TodoListContainer.js';
@@ -35,9 +35,15 @@ class TodoAppContainer extends Component {
         }
         evt.preventDefault();
     }
+
+    componentDidMount(){
+        // alert(1);
+        this.props.fetchFromFirebase();
+    }
     
     render(){
         let {isFormOpen, toggleCard} = this.props;
+
         return (
             <div className="container -top-bottom-gutter align-left">
                 <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
@@ -67,7 +73,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     toggleCard: toggleCard,
-    addTodo: addTodo
+    addTodo: addTodo,
+
+    fetchFromFirebase: fetchFromFirebase,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoAppContainer);

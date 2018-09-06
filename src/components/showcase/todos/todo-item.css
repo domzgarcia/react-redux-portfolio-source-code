@@ -57,10 +57,15 @@ input[type="checkbox"] {
     background-color: #ccc;
     margin: 0 3px;
     padding: 2px 4px;
+    display: none;
 }
 .-badge.-fb {
     background-color: #17a2b8;
 }
 .-badge.-ls {
     background-color: #6c757d;
+}
+.-fb.-active,
+.-ls.-active {
+    display: inline-block;
 }

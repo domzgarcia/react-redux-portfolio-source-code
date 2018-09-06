@@ -20,20 +20,20 @@ class TodoListItemContainer extends Component {
             tempUID: 0
         };
     }
-    
+ 
     handleChange(evt){
+        const value = evt.target.value;
         this.setState({
             radioVal: !this.state.radioVal
+        }, () => {
+            this.props.markedAsDone(value, this.state.radioVal);    
         });
-        this.props.markedAsDone(evt.target.value);
     }
 
     componentDidMount(){
         this.setState({
             radioVal: this.props.done
         });
-
-        console.log('tlic', this.props);
     }
 
     handleDoubleClick(evt, data, uuid){
@@ -67,10 +67,17 @@ class TodoListItemContainer extends Component {
     }
 
     render(){
-        let {name, done, uuid} = this.props;
+        console.log(1);
+
+        let {name, done, uuid, savedFirebase} = this.props;
         let isDone = (done) ? '-active' : '';
         let textVisibility      = (this.state.isHidden) ? '-hidden' : '';
         let tempInputVisibility = (this.state.isHidden) ? '-show' : '';
+
+        let firebaseBadgeVisibility = (savedFirebase) ? '-active' : '';
+        let localStorageBadgeVisibility = (false) ? '-active' : '';
+
+        console.log(savedFirebase);
 
         return (
             <li className="list-item">
@@ -104,8 +111,8 @@ class TodoListItemContainer extends Component {
                     }>{name}</p>
 
                     <p>
-                        <span className="-badge -fb">FIREBASE</span>
-                        <span className="-badge -ls">LOCALSTORAGE</span>
+                        <span className={"-badge -fb "+firebaseBadgeVisibility}>FIREBASE</span>
+                        <span className={"-badge -ls "+localStorageBadgeVisibility}>LOCALSTORAGE</span>
                     </p>
                 </div>
 

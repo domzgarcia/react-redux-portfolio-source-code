@@ -9,3 +9,4 @@ export const TODO_FILTER_ALL = 'all:todo';
 export const TODO_FILTER_PENDING = 'pending:todo';
 export const TODO_FILTER_DONE = 'done:todo';
 
+export const FIREBASE_FETCH_ALL = "firebase:fetchall";
