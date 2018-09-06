@@ -6,13 +6,14 @@ import rootReducer from 'Reducers/index.js';
 // import v4 from 'uuid/v4';
 
 import { TODO_FILTER_ALL } from 'Actions/showcase/todos/actionType.js';
+import firebase from 'Services/firebase.js';
 
 export const history = createHistory();
 
 const initialState = {
     todos: [],
     todoAppUI: {
-        isFormOpen: false,
+        isFormOpen: true,
         todoFilter: TODO_FILTER_ALL
     },
 };
@@ -32,6 +33,11 @@ const allStoreEnhancers = compose(
     applyMiddleware(...middleware),
     ...enhancers
 );
+
+firebase.getAll()
+    .then( response => {
+        console.log(response);
+    });
 
 const store = createStore(
     rootReducer,

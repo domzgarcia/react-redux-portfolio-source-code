@@ -9,28 +9,30 @@ const todos = (state=[], {type, payload}) => {
                 ...state,
                 { 
                     name: payload.todoText,
-                    uid: v4(),
+                    uuid: v4(),
                     done: false,
+                    saveLocalStorage: false,
+                    saveFirbase: false
                 }
             ]
         
         case MARKED_AS_DONE: 
             let currentSelected = state.filter(obj => {
-                return (obj.uid) === payload.uid;
+                return (obj.uuid) === payload.uuid;
             })[0];
             currentSelected.done = !currentSelected.done;
             return [...state]
         
         case EDIT_TODO: 
             let editSelected = state.filter(obj => {
-                return (obj.uid) === payload.uid;
+                return (obj.uuid) === payload.uuid;
             })[0];
             editSelected.name = payload.newText;
             return [...state]
 
         case DELETE_TODO:
             _.remove(state, (obj) => {
-                return obj.uid === payload.uid;
+                return obj.uuid === payload.uuid;
             });
             return [...state]        
         

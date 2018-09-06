@@ -32,13 +32,15 @@ class TodoListItemContainer extends Component {
         this.setState({
             radioVal: this.props.done
         });
+
+        console.log('tlic', this.props);
     }
 
-    handleDoubleClick(evt, data, uid){
+    handleDoubleClick(evt, data, uuid){
         this.setState({
             isHidden: true,
             tempText: data,
-            tempUID: uid
+            tempUID: uuid
         });
 
         let d = setTimeout(()=> {
@@ -60,12 +62,12 @@ class TodoListItemContainer extends Component {
         }
     }
 
-    handleDelete(uid){
-        this.props.deleteTodo(uid);
+    handleDelete(uuid){
+        this.props.deleteTodo(uuid);
     }
 
     render(){
-        let {name, done, uid} = this.props;
+        let {name, done, uuid} = this.props;
         let isDone = (done) ? '-active' : '';
         let textVisibility      = (this.state.isHidden) ? '-hidden' : '';
         let tempInputVisibility = (this.state.isHidden) ? '-show' : '';
@@ -73,7 +75,7 @@ class TodoListItemContainer extends Component {
         return (
             <li className="list-item">
                 <input type="checkbox" 
-                    value={uid}
+                    value={uuid}
                     checked={this.state.radioVal} 
                     onChange={this.handleChange}/>
 
@@ -92,18 +94,25 @@ class TodoListItemContainer extends Component {
                         this.handleEditChange();
                     }}
                 />
-                <p className={"item "+isDone+" "+textVisibility} 
-                    value={name} 
-                    onDoubleClick={
-                    (e) => {
-                        this.handleDoubleClick(e, name, uid);
-                    }
-                }>{name}</p>
+
+                <div className={"item "+isDone+" "+textVisibility}>
+                    <p value={name} 
+                        onDoubleClick={
+                        (e) => {
+                            this.handleDoubleClick(e, name, uuid);
+                        }
+                    }>{name}</p>
+
+                    <p>
+                        <span className="-badge -fb">FIREBASE</span>
+                        <span className="-badge -ls">LOCALSTORAGE</span>
+                    </p>
+                </div>
 
                 <button className="btn-delete" onClick={() => {
-                    this.handleDelete(uid);
+                    this.handleDelete(uuid);
                 }}>
-                <span>&#x2612;</span></button>
+                &#10006;</button>
             </li>
         )
     }

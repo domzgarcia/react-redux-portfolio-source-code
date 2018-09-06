@@ -1,15 +1,29 @@
 import React from 'react';
 
-import './todo.css';
+import './main.css';
 
 const TodoFormComp = (props) => {
     let isActive = props.isOpen ? '-active' : '';
     return (
         <div className={"card " + isActive}>
-            <div className="title">New todo</div>
+            <div className="title">What is your todo today?</div>
             <form onSubmit={props.onSubmit}>
                 <input type="text" onChange={props.handleChange}/>
-                <button type="submit" className="btn-add -green pull-right">Submit</button>
+                
+                <div className="settings-cont">
+                    <div className="opt">
+                        <p>Save todos with:</p>
+                        <label>
+                            <input type="checkbox"/>
+                            <span>Firebase</span>
+                        </label>
+                        <label>
+                            <input type="checkbox"/>
+                            <span>LocalStorage</span>
+                        </label>
+                    </div>
+                    <button type="submit" className="btn-add -green pull-right">Submit</button>
+                </div>
                 <div className="clearfix"></div>
             </form>
         </div>

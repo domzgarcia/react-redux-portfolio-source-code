@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import 'Components/showcase/todos/todo.css';
+import 'Components/showcase/todos/main.css';
 import TodoListItemContainer from './TodoListItemContainer';
 import {TODO_FILTER_PENDING, TODO_FILTER_DONE} from 'Actions/showcase/todos/actionType.js';
 
@@ -10,8 +10,10 @@ class TodoListContainer extends Component {
     }
     render(){
         let {todos, todoFilter} = this.props;
+        let contVisibility = (!!todos.length) ? '-active' : '';
+        
         return (
-            <div className="todos">
+            <div className={"todos "+contVisibility}>
                 <ul className="list">
                     { // Just copied the code
                         todos
@@ -26,11 +28,11 @@ class TodoListContainer extends Component {
                                 }
                             })
                             .reverse()
-                            .map( (obj, idx) => {
+                            .map( (todoItem, idx) => {
                                 return (
                                         <TodoListItemContainer 
-                                        key={obj.uid}
-                                        {...obj}
+                                        key={todoItem.uuid}
+                                        {...todoItem}
                                         />
                                     )
                                 })

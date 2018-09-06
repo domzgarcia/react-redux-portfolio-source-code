@@ -29,6 +29,9 @@ class TodoAppContainer extends Component {
             
             evt.target.reset();
             this.setState({text: ''});    
+        
+        } else {
+            alert('Kindly provide some todos before you can continue.');
         }
         evt.preventDefault();
     }
@@ -38,12 +41,11 @@ class TodoAppContainer extends Component {
         return (
             <div className="container -top-bottom-gutter align-left">
                 <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
-                <h1 className="page-title">Todo App</h1>
+                <h4 className="page-title">Todo App with React,Redux,Thunk</h4>
 
                 <div className="app-sample">
                     <div className="top-nav">
-                        <span><strong>Remaining features: </strong>Firebase, LocalStorage &nbsp;&nbsp;</span>
-                        <button className="btn-add" onClick={toggleCard}> &nbsp; { (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
+                        <button className="btn-add" onClick={toggleCard}>{ (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
                     </div>
                     <TodoFormComp 
                         isOpen={isFormOpen} 

@@ -6,22 +6,30 @@
     max-width: 450px;
     width: 100%;
     margin: 20px auto;
+    font-size: 13px;
+    font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
 }
 .top-nav {
     background-color: #eee;
     padding: 10px;
     border-radius: 10px;
     text-align: right;
+    margin-bottom: 10px;
 }
 .btn-add {
-    background-color: rgb(94, 217, 255);
-    border-radius: 5px;
+    background-color: #007bff;
+    border-radius: 0px;
+    border: 0;
     padding: 10px;
     display: inline-block;
     outline: none;
+    color: #fff;
+    max-width: 100px;
+    width: 100%;
 }
 .-green {
-    background-color:#78d678 !important;
+    background-color:#28a745 !important;
+    height: 38px;
 }
 /* CARD */
 .card {
@@ -41,25 +49,29 @@
 .card input[type="text"] {
     max-width: 100%;
     width: 100%;
-    font-size: 20px;
-    margin: 20px 0;
+    font-size: 15px;
+    margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ddd;
     outline: none;
     padding: 5px 10px;
 }
 .todos {
+    /* background-color:#EEEEEE; */
     padding: 15px;
     margin: 20px 0;
     border-radius: 5px;
     border: 1px solid #ddd;
+    display: none;
+}
+.todos.-active {
+    display: block;
 }
 .todos .list {
     padding: 0;
     margin: 0;
     list-style: none;
 }
-
 .btn-filters {
     display: flex;
     align-items: flex-start;
@@ -69,10 +81,29 @@
 .btn-filters button {
     width: 33%;
     outline: none;
+    background-color: #ffc107;
+    padding: 10px;
+    outline: none;
+    max-width: 100%;
+    width: 100%;
+    border: thin solid #e4b629;
 }
 
 .btn-all.-active,
 .btn-pending.-active,
 .btn-done.-active {
     background-color: yellow;
+}
+
+.settings-cont {
+    display: flex;
+    flex-direction: row;
+}
+.settings-cont .opt {
+    max-width: 100%;
+    width: 100%;
+}
+.settings-cont label {
+    margin-bottom: 0;
+    margin-right: 10px;
 }

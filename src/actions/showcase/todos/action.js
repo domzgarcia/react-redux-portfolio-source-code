@@ -19,28 +19,28 @@ export const addTodo = (todoText) => {
         }
     }
 }
-export const markedAsDone = (uid) => {
+export const markedAsDone = (uuid) => {
     return {
         type: MARKED_AS_DONE,
         payload: {
-            uid
+            uuid
         }
     }
 }
-export const editTodo = (newText, uid) => {
+export const editTodo = (newText, uuid) => {
     return {
         type: EDIT_TODO,
         payload: {
             newText,
-            uid
+            uuid
         }
     }
 }
-export const deleteTodo = (uid) => {
+export const deleteTodo = (uuid) => {
     return {
         type: DELETE_TODO,
         payload: {
-            uid
+            uuid
         }
     }
 }
