@@ -48,7 +48,9 @@ class TodoAppContainer extends Component {
         
         return (
             <div className="container -top-bottom-gutter align-left">
+                
                 <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
+                <div className="clearfix"></div>
                 <div className="app-sample">
                     <div className="top-nav">
                         <button className="btn-add" onClick={toggleCard}>{ (isFormOpen ? 'Hide Form' : 'Show Form') }</button>

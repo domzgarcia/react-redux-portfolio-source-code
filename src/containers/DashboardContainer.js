@@ -7,11 +7,8 @@ class DashboardContainer extends Component {
     }
     render(){
         return (
-            <h1>Dashboard</h1>
+            <h1 className="page-title">Dashboard</h1>
         )
-    }
-    componentDidMount(){
-        document.querySelector('title').innerText = 'Home';
     }
 }
 

@@ -7,6 +7,25 @@ class FooterContainer extends Component {
     constructor(props){
         super(props);
     }
+    componentWillReceiveProps(props){
+        const {pathname} = props.routerReducer.location;
+        
+        if(pathname.indexOf('')>-1){
+            document.querySelector('title').innerText = 'Home';
+        }
+        if(pathname.indexOf('about')>-1){
+            document.querySelector('title').innerText = 'About';
+        }
+        if(pathname.indexOf('showcase')>-1){
+            document.querySelector('title').innerText = 'Showcase';
+        }
+        if(pathname.indexOf('todo')>-1){
+            document.querySelector('title').innerText = 'Todo App - Showcase';
+        }
+        if(pathname.indexOf('contact')>-1){
+            document.querySelector('title').innerText = 'Contact Us';
+        }
+    }
     render(){
         return (
             <div>
@@ -17,7 +36,7 @@ class FooterContainer extends Component {
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {...state};
 };
 const mapDispatchToProps = dispatch => {
     return {};

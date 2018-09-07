@@ -15,9 +15,9 @@ class ShowcaseContainer extends Component {
     render(){
         return (
             <div className="container -top-bottom-gutter"> 
-                <br />
-                <h1>Showcase Projects</h1>
-                <br />
+
+                <h1 className="page-title">Showcase Projects</h1>
+
                 <ul className="showcase-list">
                     <li className="showcase-item">
                         <Link to="/showcase/todo-app">

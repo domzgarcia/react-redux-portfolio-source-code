@@ -7,11 +7,8 @@ class ContactUsContainer extends Component {
     }
     render(){
         return (
-            <h1>Contact Us</h1>
+            <h1 className="page-title">Contact Us</h1>
         )
-    }
-    componentDidMount(){
-        document.querySelector('title').innerText = 'Contact Us';
     }
 }
 

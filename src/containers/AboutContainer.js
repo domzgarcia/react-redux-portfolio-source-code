@@ -7,11 +7,8 @@ class AboutContainer extends Component {
     }
     render(){
         return (
-            <h1>About Page</h1>
+            <h1 className="page-title">About Page</h1>
         )
-    }
-    componentDidMount(){
-        document.querySelector('title').innerText = 'About Me';
     }
 }
 
