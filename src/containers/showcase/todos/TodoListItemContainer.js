@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import 'Components/showcase/todos/todo-item.css';
 import {markedAsDone, editTodo, deleteTodo} from 'Actions/showcase/todos/action.js';
+import FlickrLoaderComp from 'Components/FlickrLoaderComp.js';
 
 class TodoListItemContainer extends Component {
     constructor(props){
@@ -56,10 +57,11 @@ class TodoListItemContainer extends Component {
     }
 
     handleEditChange(evt){
-        this.setState({isHidden: false});
-        if(!!this.state.tempText.length){
-            this.props.editTodo(this.state.tempText, this.state.tempUID);
-        }
+        this.setState({isHidden: false}, () => {
+            if(!!this.state.tempText.length){
+                this.props.editTodo(this.state.tempText, this.state.tempUID);
+            }
+        });
     }
 
     handleDelete(uuid){
@@ -67,20 +69,19 @@ class TodoListItemContainer extends Component {
     }
 
     render(){
-        console.log(1);
-
-        let {name, done, uuid, savedFirebase} = this.props;
+        let {name, done, uuid, savedFirebase, isLoading, targetId} = this.props;
         let isDone = (done) ? '-active' : '';
         let textVisibility      = (this.state.isHidden) ? '-hidden' : '';
         let tempInputVisibility = (this.state.isHidden) ? '-show' : '';
-
         let firebaseBadgeVisibility = (savedFirebase) ? '-active' : '';
         let localStorageBadgeVisibility = (false) ? '-active' : '';
-
-        console.log(savedFirebase);
-
+        let isSelfLoading = (uuid===targetId && isLoading===true) ? true : false;
+        
         return (
             <li className="list-item">
+
+                <FlickrLoaderComp isLoading={isSelfLoading}/>
+
                 <input type="checkbox" 
                     value={uuid}
                     checked={this.state.radioVal} 
@@ -125,10 +126,15 @@ class TodoListItemContainer extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    isLoading: state.todoAppUI.isLoading,
+    targetId: state.todoAppUI.targetId
+});
+
 const mapDispatchToProps = {
     markedAsDone: markedAsDone,
     editTodo: editTodo,
     deleteTodo: deleteTodo
 };
 
-export default connect(null, mapDispatchToProps)(TodoListItemContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListItemContainer);

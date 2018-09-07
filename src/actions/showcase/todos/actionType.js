@@ -10,3 +10,5 @@ export const TODO_FILTER_PENDING = 'pending:todo';
 export const TODO_FILTER_DONE = 'done:todo';
 
 export const FIREBASE_FETCH_ALL = "firebase:fetchall";
+export const LOADER_CONTROL = "loader:show-hide";
+export const ADD_TODO_LOADER = "loader:add-todo";

@@ -38,6 +38,7 @@
     padding: 15px;
     border-radius: 10px;
     display: none;
+    position: relative;
 }
 .card.-active {
     display: block;

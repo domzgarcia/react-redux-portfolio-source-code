@@ -14,6 +14,8 @@ const initialState = {
     todos: [],
     todoAppUI: {
         isFormOpen: true,
+        isFormLoading: false,
+        targetId: 0,
         todoFilter: TODO_FILTER_ALL
     },
 };

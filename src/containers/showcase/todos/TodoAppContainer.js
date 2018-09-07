@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'react-router-dom/Link';
 
-import {toggleCard, addTodo,fetchFromFirebase} from 'Actions/showcase/todos/action.js';
+import {toggleCard, addTodo, addTodoLoader, fetchFromFirebase} from 'Actions/showcase/todos/action.js';
 
 import TodoFormComp from 'Components/showcase/todos/TodoFormComp.js';
 import TodoListContainer from 'Containers/showcase/todos/TodoListContainer.js';
@@ -26,6 +26,8 @@ class TodoAppContainer extends Component {
     handleSubmit(evt){
         if(!!this.state.text.length){
             this.props.addTodo(this.state.text); 
+
+            this.props.addTodoLoader();
             
             evt.target.reset();
             this.setState({text: ''});    
@@ -37,29 +39,31 @@ class TodoAppContainer extends Component {
     }
 
     componentDidMount(){
-        // alert(1);
         this.props.fetchFromFirebase();
     }
     
     render(){
-        let {isFormOpen, toggleCard} = this.props;
-
+        let {isFormOpen, toggleCard, isFormLoading} = this.props;
+        
         return (
             <div className="container -top-bottom-gutter align-left">
                 <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
-                <h4 className="page-title">Todo App with React,Redux,Thunk</h4>
-
                 <div className="app-sample">
                     <div className="top-nav">
                         <button className="btn-add" onClick={toggleCard}>{ (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
                     </div>
+                    {/* Navigation */}
                     <TodoFormComp 
                         isOpen={isFormOpen} 
                         onSubmit={this.handleSubmit} 
                         handleChange={this.handleChange}
+                        isFormLoading={isFormLoading}
                     />
+
+                    {/* List */}
                     <TodoListContainer />
 
+                    {/* Filter */}
                     <TodoFilterContainer />
                 </div>
             </div>
@@ -69,11 +73,13 @@ class TodoAppContainer extends Component {
 
 const mapStateToProps = (state) => ({
     isFormOpen: state.todoAppUI.isFormOpen,
+    isFormLoading: state.todoAppUI.isFormLoading
 });
 
 const mapDispatchToProps = {
     toggleCard: toggleCard,
     addTodo: addTodo,
+    addTodoLoader: addTodoLoader,
 
     fetchFromFirebase: fetchFromFirebase,
 };

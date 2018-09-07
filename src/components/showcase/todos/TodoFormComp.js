@@ -1,12 +1,15 @@
 import React from 'react';
 
 import './main.css';
+import FlickrLoaderComp from 'Components/FlickrLoaderComp';
 
 const TodoFormComp = (props) => {
     let isActive = props.isOpen ? '-active' : '';
+
     return (
         <div className={"card " + isActive}>
-            <div className="title">What is your todo today?</div>
+            <FlickrLoaderComp isLoading={props.isFormLoading}/>
+            <div className="title">What's on your mind?</div>
             <form onSubmit={props.onSubmit}>
                 <input type="text" onChange={props.handleChange}/>
                 
@@ -14,7 +17,7 @@ const TodoFormComp = (props) => {
                     <div className="opt">
                         <p>Save todos with:</p>
                         <label>
-                            <input type="checkbox"/>
+                            <input type="checkbox" />
                             <span>Firebase</span>
                         </label>
                         <label>
