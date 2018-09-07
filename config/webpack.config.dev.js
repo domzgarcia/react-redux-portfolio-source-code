@@ -12,7 +12,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
-const commonConfig = require('./webpack.config.common');
+const commonConfig = require('./webpack.config.common.js');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
