@@ -40,6 +40,7 @@ class TodoAppContainer extends Component {
 
     componentDidMount(){
         this.props.fetchFromFirebase();
+        document.querySelector('title').innerText = 'Todo App';
     }
     
     render(){

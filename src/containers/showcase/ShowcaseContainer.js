@@ -9,6 +9,9 @@ class ShowcaseContainer extends Component {
     constructor(props){
         super(props);
     }
+    componentDidMount(){
+        document.querySelector('title').innerText = 'Showcase Projects';
+    }
     render(){
         return (
             <div className="container -top-bottom-gutter"> 

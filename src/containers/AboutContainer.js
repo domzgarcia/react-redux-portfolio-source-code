@@ -10,6 +10,9 @@ class AboutContainer extends Component {
             <h1>About Page</h1>
         )
     }
+    componentDidMount(){
+        document.querySelector('title').innerText = 'About Me';
+    }
 }
 
 function mapStateToProps(state) {

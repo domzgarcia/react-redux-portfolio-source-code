@@ -10,6 +10,9 @@ class DashboardContainer extends Component {
             <h1>Dashboard</h1>
         )
     }
+    componentDidMount(){
+        document.querySelector('title').innerText = 'Home';
+    }
 }
 
 function mapStateToProps(state) {

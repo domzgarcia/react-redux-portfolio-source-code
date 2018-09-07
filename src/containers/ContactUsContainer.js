@@ -10,6 +10,9 @@ class ContactUsContainer extends Component {
             <h1>Contact Us</h1>
         )
     }
+    componentDidMount(){
+        document.querySelector('title').innerText = 'Contact Us';
+    }
 }
 
 function mapStateToProps(state) {
