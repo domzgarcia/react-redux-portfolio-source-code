@@ -66,6 +66,17 @@ class TodoAppContainer extends Component {
                     {/* Filter */}
                     <TodoFilterContainer />
                 </div>
+
+                <br />
+                <br />
+
+                <p><strong>Project description:</strong></p>
+                <p>Simple todo app with firebase integration(simple REST API). Have a usual functionality such as C.R.U.D
+                   
+                </p>
+
+                <br />
+                <br />
             </div>
         )
     }

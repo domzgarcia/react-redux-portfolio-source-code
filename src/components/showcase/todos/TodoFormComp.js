@@ -17,13 +17,13 @@ const TodoFormComp = (props) => {
                     <div className="opt">
                         <p>Save todos with:</p>
                         <label>
-                            <input type="checkbox" />
+                            {/* <input type="checkbox" /> */}
                             <span>Firebase</span>
                         </label>
-                        <label>
+                        {/* <label>
                             <input type="checkbox"/>
                             <span>LocalStorage</span>
-                        </label>
+                        </label> */}
                     </div>
                     <button type="submit" className="btn-add -green pull-right">Submit</button>
                 </div>
