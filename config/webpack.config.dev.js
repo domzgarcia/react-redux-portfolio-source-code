@@ -9,21 +9,30 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+
+// const commonConfigSass = require('./SassLoaderConfig.js');
 
 const commonConfig = require('./webpack.config.common.js');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
-const publicPath = '/';
+const publicPath = paths.servedPath;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+ const cssFilename = 'static/css/common.css';
+ const shouldUseRelativeAssetPaths = publicPath === './';
+ const extractTextPluginOptions = shouldUseRelativeAssetPaths ?  
+ { publicPath: Array(cssFilename.split('/').length).join('../') }
+ : {};
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -160,6 +169,8 @@ let webpackConfig = {
           // "style" loader turns CSS into JS modules that inject <style> tags.
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
+          /* 
+          ### START: REMOVE POST CSS
           {
             test: /\.css$/,
             use: [
@@ -192,6 +203,39 @@ let webpackConfig = {
               },
             ],
           },
+          ### END REMOVE POST CSS
+          */
+          {
+            test: [/\.css$/,/\.scss/],
+            loader: ExtractTextPlugin.extract(
+              Object.assign({
+                fallback: {
+                  loader: require.resolve('style-loader'),
+                  options: {
+                    hmr: false,
+                  },
+                },
+                use: [
+                  {
+                    loader: require.resolve('css-loader'),
+                    options: {
+                      importLoaders: 1,
+                      minimize: true,
+                      sourceMap: false,
+                    },
+                  },
+                  {
+                    loader: require.resolve('sass-loader'),
+                    options: {
+                      includePaths: ['absolute/path/a','absolute/path/b']
+                    },
+                  },
+                ]
+              },
+              extractTextPluginOptions)
+            )
+          },
+
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -247,6 +291,11 @@ let webpackConfig = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    
+    // Added for CSS static files
+    new ExtractTextPlugin({
+      filename: cssFilename
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

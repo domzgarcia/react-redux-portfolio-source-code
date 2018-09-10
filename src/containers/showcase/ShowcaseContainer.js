@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import 'Containers/showcase/showcase.css';
 
+import 'Containers/showcase/showcase.scss';
+
 import todosThumb from '../../assets/img/todos.png';
 
 class ShowcaseContainer extends Component {
@@ -16,6 +18,10 @@ class ShowcaseContainer extends Component {
         return (
             <div className="container -top-bottom-gutter"> 
 
+                <div className="cont-sass">
+                    <span>With Sass preprocessor</span>
+                </div>
+                
                 <h1 className="page-title">Showcase Projects</h1>
 
                 <ul className="showcase-list">
