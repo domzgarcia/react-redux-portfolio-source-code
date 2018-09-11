@@ -6,6 +6,7 @@ import 'Containers/showcase/showcase.css';
 import 'Containers/showcase/showcase.scss';
 
 import todosThumb from '../../assets/img/todos.png';
+import chatApp from '../../assets/img/chat.png';
 
 class ShowcaseContainer extends Component {
     constructor(props){
@@ -34,7 +35,7 @@ class ShowcaseContainer extends Component {
 
                     <li className="showcase-item">
                         <Link to="/showcase/chat-app">
-                            <img src={todosThumb}/>
+                            <img src={chatApp}/>
                             <p className="projectname">Simple Chat</p>
                         </Link>
                     </li>
