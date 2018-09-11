@@ -32,7 +32,12 @@ class ShowcaseContainer extends Component {
                         </Link>
                     </li>
 
-                    <li className="showcase-item"></li>
+                    <li className="showcase-item">
+                        <Link to="/showcase/chat-app">
+                            <img src={todosThumb}/>
+                            <p className="projectname">Simple Chat</p>
+                        </Link>
+                    </li>
 
                     <li className="showcase-item"></li>
 

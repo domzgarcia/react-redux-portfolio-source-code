@@ -11,12 +11,21 @@ import firebase from 'Services/firebase.js';
 export const history = createHistory();
 
 const initialState = {
+    // I haven't manage todos scope here
     todos: [],
     todoAppUI: {
         isFormOpen: true,
         isFormLoading: false,
         targetId: 0,
         todoFilter: TODO_FILTER_ALL
+    },
+    // Showcase -> Chat app
+    chatStore: {
+        user: {
+            isAuthenticated: false,
+            userData: null
+        },
+        data: {}
     },
 };
 
@@ -35,14 +44,6 @@ const allStoreEnhancers = compose(
     applyMiddleware(...middleware),
     ...enhancers
 );
-
-// firebase.getAll()
-//     .then( response => {
-//         const spreadToArray = Object.keys(response.data.todos).map(function(key) {
-//             return response.data.todos[key];
-//           });
-//         console.log('spreadToArray', spreadToArray);
-//     });
 
 const store = createStore(
     rootReducer,

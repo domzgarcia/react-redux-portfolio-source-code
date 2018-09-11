@@ -1,0 +1,129 @@
+.-custom-chat-width {
+    max-width: 900px;
+    width: 100%;
+}
+.chat-navigation {
+    padding: 15px;
+    background: #eee;
+    text-align: left;
+}
+.signout {
+    float: right;
+    padding: 0;
+    outline: 0;
+    border-radius: 0;
+    width: 70px;
+    height:30px;
+}
+.wgreet {
+    display: inline-block;
+}
+
+.common-body {
+    padding: 15px;
+    border: 1px solid #eee;
+    min-height: 300px;
+}
+
+.profile {
+    display: none;
+    &.-active {
+        display: block;
+    }
+    @extend .common-body;
+}
+
+.chatroom {
+    @extend .common-body;
+}
+
+.btn-trigger-google-popup {
+    padding: 10px;
+    margin-top: 20px;
+}
+.imgCont {
+    max-width: 50px;
+    width: 100%;
+    > img {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+    }
+}
+.profileCont {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    .description {
+        margin-left: 15px;
+    }
+    .name {
+        font-weight: bold;
+        font-size: 15px;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+    .email {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+.chatRoomCont {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    .createCont {
+        max-width: 10%;
+        width: 100%;
+    }
+    .roomsCont {
+        border: 1px solid #eee;
+        max-width: 100%;
+        width: 100%;
+        min-height: 300px;
+        padding: 5px;
+
+        .list {
+            list-style: none;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            flex-direction: row;
+            padding: 0;
+            margin: 0;
+        }
+        .item {
+            cursor: pointer;
+            border: 1px solid #eee;
+            max-width: 33%;
+            margin-left: .3%;
+            width: 100%;
+            padding: 10px 20px;
+            margin-bottom: 3px;
+
+            > p {
+                margin: 2px;
+                white-space: nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            > .description {
+                font-size: 14px;
+            }
+            > .name {
+                font-size: 18px;
+                font-weight: bold;
+            }
+            > .createdBy {
+                font-size: 10px;
+            }
+        }
+    }
+}
+
+.chatplatform {
+
+}
