@@ -18,6 +18,7 @@ class TodoListItemContainer extends Component {
             radioVal: false,
             isHidden: false,
             tempText: '',
+            oldText: '',
             tempUID: 0
         };
     }
@@ -39,15 +40,20 @@ class TodoListItemContainer extends Component {
 
     handleDoubleClick(evt, data, uuid){
         this.setState({
-            isHidden: true,
-            tempText: data,
-            tempUID: uuid
+            oldText: data
+        }, 
+        () => {
+            this.setState({
+                isHidden: true,
+                tempText: data,
+                tempUID: uuid,
+            }, () => {
+                const d = setTimeout(()=> {
+                    clearTimeout(d);
+                    this.tempInput.focus();
+                }, 100);
+            });
         });
-
-        let d = setTimeout(()=> {
-            clearTimeout(d);
-            this.tempInput.focus();
-        }, 100);
     }
 
     handleTempTextChange(evt){
@@ -58,7 +64,7 @@ class TodoListItemContainer extends Component {
 
     handleEditChange(evt){
         this.setState({isHidden: false}, () => {
-            if(!!this.state.tempText.length){
+            if(!!this.state.tempText.length && this.state.oldText !== this.state.tempText){
                 this.props.editTodo(this.state.tempText, this.state.tempUID);
             }
         });
@@ -76,7 +82,7 @@ class TodoListItemContainer extends Component {
         let firebaseBadgeVisibility = (savedFirebase) ? '-active' : '';
         let localStorageBadgeVisibility = (false) ? '-active' : '';
         let isSelfLoading = (uuid===targetId && isLoading===true) ? true : false;
-        
+    
         return (
             <li className="list-item">
 

@@ -14,6 +14,8 @@ class TodoListContainer extends Component {
         // console.log('todos',todos);
         return (
             <div className={"todos "+contVisibility}>
+                <p><strong>Hint:</strong> Double tap to edit</p>
+                <hr></hr>
                 <ul className="list">
                     { // Just copied the code
                         todos

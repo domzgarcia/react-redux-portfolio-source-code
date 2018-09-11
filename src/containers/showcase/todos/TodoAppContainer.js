@@ -74,8 +74,8 @@ class TodoAppContainer extends Component {
                 <br />
 
                 <p><strong>Project description:</strong></p>
-                <p>Simple todo app with firebase integration(simple REST API). Have a usual functionality such as C.R.U.D
-                   
+                <p>Simple todo app with firebase integration(simple REST API). Has a usual functionality such as C.R.U.D
+                    to explore passing of events from one component to another.
                 </p>
 
                 <br />

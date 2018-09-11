@@ -4,9 +4,6 @@ import 'Components/flickrLoader.css';
 
 const FlickrLoaderComp = (props) => {
     let loaderVisibility = (props.isLoading) ? '-active' : '';
-
-    console.log(props.isLoading);
-    
     return (
         <div className={"flickrloader-cont " + loaderVisibility}>
             <div className="lds-css ng-scope">

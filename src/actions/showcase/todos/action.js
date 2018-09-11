@@ -122,7 +122,7 @@ export const fetchFromFirebase = () => {
                     return response.data.todos[key];
                 });
             }
-            console.log('objectsToArrayObjects', objectsToArrayObjects);
+            // console.log('objectsToArrayObjects', objectsToArrayObjects);
             dispatch({
                 type: FIREBASE_FETCH_ALL,
                 payload: {
