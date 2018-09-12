@@ -4,7 +4,8 @@ import Link from 'react-router-dom/Link';
 
 import 'Src/assets/layouts/popup.scss';
 import ChatCreateRoomContainer from 'Containers/showcase/chat/ChatCreateRoomContainer.js';
-import { POPUP_CREATE_ROOM } from 'Actions/showcase/chat/actionType';
+import { POPUP_CREATE_ROOM } from 'Actions/showcase/chat/actionType.js';
+import { closeOpenPopup } from 'Actions/showcase/chat/action.js';
 
 class DynamicPopUpContainer extends Component {
     constructor(props){
@@ -16,7 +17,7 @@ class DynamicPopUpContainer extends Component {
     }
     
     handlePopup(){
-        this.props.openPopup();
+        this.props.closeOpenPopup();
         // I'm thinking if essential to reset popupType here...
     }
 
@@ -51,5 +52,9 @@ const mapStateToProps = (state) => ({
     popupType: state.chatStore.appUI.popupType
 });
 
-export default connect(mapStateToProps, null)(DynamicPopUpContainer);
+const mapDispatchToProps = {
+    closeOpenPopup: closeOpenPopup
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DynamicPopUpContainer);
     

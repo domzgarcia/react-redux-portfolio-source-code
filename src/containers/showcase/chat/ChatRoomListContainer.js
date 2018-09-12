@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'react-router-dom/Link';
+import {changeScene} from 'Actions/showcase/chat/action.js';
+import { SCENE_CHATROOM } from 'Actions/showcase/chat/actionType';
 
 class ChatRoomListContainer extends Component {
     constructor(props){
         super(props);
+        this.handleSelectRoom = this.handleSelectRoom.bind(this);
+    }
+
+    handleSelectRoom(id){
+        console.log(id);
+        this.props.changeScene(SCENE_CHATROOM);
     }
 
     render(){
@@ -17,7 +24,9 @@ class ChatRoomListContainer extends Component {
                     <ul className="list">
                         {rooms.map( (item, idx) => {
                             return ( 
-                                <li className="item" key={item.id}>
+                                <li className="item" key={item.id} onClick={()=>{
+                                    this.handleSelectRoom(item.id);
+                                }}>
                                     <p className="name">{item.title}</p>
                                     <p className="description">{item.description}</p>
                                     <p className="createdBy">{item.createdBy}</p>
@@ -39,7 +48,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    
-};
+    changeScene: changeScene
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomListContainer);

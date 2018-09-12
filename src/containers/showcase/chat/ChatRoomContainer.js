@@ -1,42 +1,39 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'react-router-dom/Link';
-import firebase from 'firebase';
 import ChatRoomListContainer from 'Containers/showcase/chat/ChatRoomListContainer.js';
 import ChatRoomPlatform from 'Containers/showcase/chat/ChatRoomPlatform.js';
 import DynamicPopUpContainer from 'Containers/DynamicPopUpContainer.js';
-import { POPUP_CREATE_ROOM } from 'Actions/showcase/chat/actionType.js';
-import { setPopUpType } from 'Actions/showcase/chat/action.js';
+import { POPUP_CREATE_ROOM, SCENE_CHATROOM, SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType.js';
+import { setPopUpType, closeOpenPopup, changeScene } from 'Actions/showcase/chat/action.js';
 
 class ChatRoomContainer extends Component {
     constructor(props){
         super(props);
         this.handlerOpenPopup = this.handlerOpenPopup.bind(this);
-        this.state = {
-            isPopupOpen: false
-        }
+        this.handlerLeaveRoom = this.handlerLeaveRoom.bind(this);
     }
 
     handlerOpenPopup(){
-        let {isPopupOpen} = this.state;
-        this.setState({
-            isPopupOpen: !isPopupOpen
-        });
         this.props.setPopUpType(POPUP_CREATE_ROOM);
+        this.props.closeOpenPopup();
+    }
+
+    handlerLeaveRoom(){
+        this.props.changeScene(SCENE_ROOMS_LIST);
     }
 
     render (){
-        let {userData} = this.props;
+        let {userData, popupBool, scene} = this.props;
         
+        console.log(scene);
+
         return (
             <div>
-                <div className="chatroom">
-                    <hr/>
-                    
                     <DynamicPopUpContainer 
-                        isOpen={this.state.isPopupOpen}
+                        isOpen={popupBool}
                         openPopup={this.handlerOpenPopup}/>
 
+                <div className="chatroom">
                     <div className="profileCont">
                         <div className="imgCont">
                             <img src={userData.photoURL || ''}/>
@@ -45,15 +42,25 @@ class ChatRoomContainer extends Component {
                             <p className="name">{userData.displayName || 'default name'}</p>
                             <p className="email">{userData.email || 'default@email.com'}</p>
                         </div>
+                        
                         <div className="btnCont">
-                            <button onClick={this.handlerOpenPopup}>Create Room</button>
+                            {scene === SCENE_ROOMS_LIST 
+                            ? <button onClick={this.handlerOpenPopup}>Create Room</button>
+                            : <button onClick={this.handlerLeaveRoom}>Leave Room</button>
+                            }
                         </div>
                     </div>
-                    <hr/>
 
-                    <ChatRoomListContainer />
-
-                    <ChatRoomPlatform />
+                    {((scene) => {
+                        switch(scene){
+                            case SCENE_ROOMS_LIST:
+                                return <ChatRoomListContainer />
+                            case SCENE_CHATROOM:
+                                return <ChatRoomPlatform />
+                            default:
+                                return (<div>Page 404</div>)
+                        }
+                    })(scene)}
                 </div>
             </div>
         )
@@ -61,11 +68,15 @@ class ChatRoomContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    userData: state.chatStore.user.userData
+    userData: state.chatStore.user.userData,
+    popupBool: state.chatStore.appUI.isPopupOpen,
+    scene: state.chatStore.appUI.scene,
 });
 
 const mapDispatchToProps = {
-    setPopUpType: setPopUpType
+    setPopUpType: setPopUpType,
+    closeOpenPopup: closeOpenPopup,
+    changeScene: changeScene
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomContainer);

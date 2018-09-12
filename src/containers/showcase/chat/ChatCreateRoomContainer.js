@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
-import {createRoom} from 'Actions/showcase/chat/action.js';
+import {createRoom,closeOpenPopup} from 'Actions/showcase/chat/action.js';
 
 class ChatCreateRoomContainer extends Component {
     constructor(props){
@@ -21,16 +21,40 @@ class ChatCreateRoomContainer extends Component {
         };
     }
 
+    fixName(title){
+        const arr = title.split('');
+        const arr0 = arr[0].charAt(0).toUpperCase();
+        arr[0] = arr0;
+        const fixedTitle = arr.join('');
+        return fixedTitle;
+    }
+
     handleSubmit(e){
         e.preventDefault();
+
+        if(!this.state.roomTitle.length || !this.state.roomDescript.length) return;
+        
+        
         const roomData = {
-            title: this.state.roomTitle,
+            title: this.fixName(this.state.roomTitle),
             description: this.state.roomDescript,
             createdBy: this.props.userData.email,
             createdAt: moment().format('MMMM Do YYYY, h:mm:ss a'),
             isPrivate: this.state.isPrivate,
         }
+
+        e.target.reset();
+
         this.props.createRoom(roomData);
+        this.props.closeOpenPopup();
+
+        this.setState({
+            roomTitle: '',
+            roomDescript: '',
+            createdBy: '',
+            createdAt: 0,
+            isPrivate: false,
+        });
     }
     handleChangeDescription(evt){
         this.setState({
@@ -80,7 +104,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    createRoom: createRoom
+    createRoom: createRoom,
+    closeOpenPopup: closeOpenPopup
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatCreateRoomContainer);

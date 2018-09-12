@@ -7,6 +7,7 @@ import rootReducer from 'Reducers/index.js';
 
 import { TODO_FILTER_ALL } from 'Actions/showcase/todos/actionType.js';
 import firebase from 'Services/firebase.js';
+import { SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType';
 
 export const history = createHistory();
 
@@ -18,37 +19,7 @@ const initialState = {
         isFormLoading: false,
         targetId: 0,
         todoFilter: TODO_FILTER_ALL
-    },
-    // Showcase -> Chat app
-    chatStore: {
-        appUI: {
-            popupType: '',
-            isAuthenticated: false,
-        },
-        user: {
-            userData: null
-        },
-        rooms: [ // Schema
-            /*{   
-                id: '<generated>', 
-                createdBy: '<user>', 
-                createdAt: '<date>', 
-                title: '<title>', 
-                description: '<description>',
-                isPrivate: false,
-
-                messages: [
-                    {
-                        id: '<generated>',
-                        user: '<username>',
-                        email: '<email>',
-                        userMessages: '<user messages>',
-                        timestamp: '<date>',
-                    }
-                ]
-            }*/
-        ]
-    },
+    }
 };
 
 const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,4 +1,4 @@
-import { USER_AUTH, POPUP_CREATE_ROOM, CREATE_ROOM } from "Actions/showcase/chat/actionType.js";
+import { USER_AUTH, SCENE_CHANGE, CREATE_ROOM, CLOSE_OPEN_POPUP } from "Actions/showcase/chat/actionType.js";
 
 export const signInGoogle = (bool = false, userData = {}) => {
     return {
@@ -7,6 +7,12 @@ export const signInGoogle = (bool = false, userData = {}) => {
             bool,
             userData
         }
+    }
+}
+
+export const closeOpenPopup = () => {
+    return {
+        type: CLOSE_OPEN_POPUP,
     }
 }
 
@@ -24,6 +30,15 @@ export const createRoom = (roomData) => {
         type: CREATE_ROOM,
         payload: {
             roomData
+        }
+    }
+}
+
+export const changeScene = (sceneType) => {
+    return {
+        type: SCENE_CHANGE,
+        payload: {
+            sceneType
         }
     }
 }
