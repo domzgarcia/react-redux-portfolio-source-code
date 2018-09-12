@@ -40,7 +40,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.chatStore.user.isAuthenticated
+    isAuthenticated: state.chatStore.appUI.isAuthenticated
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatHeaderContainer);

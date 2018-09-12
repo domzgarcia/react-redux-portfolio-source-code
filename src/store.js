@@ -21,11 +21,16 @@ const initialState = {
     },
     // Showcase -> Chat app
     chatStore: {
-        user: {
+        appUI: {
+            popupType: undefined,
             isAuthenticated: false,
+        },
+        user: {
             userData: null
         },
-        data: {}
+        data: {
+
+        }
     },
 };
 

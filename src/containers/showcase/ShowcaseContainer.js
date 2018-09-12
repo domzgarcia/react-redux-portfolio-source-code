@@ -5,8 +5,8 @@ import 'Containers/showcase/showcase.css';
 
 import 'Containers/showcase/showcase.scss';
 
-import todosThumb from '../../assets/img/todos.png';
-import chatApp from '../../assets/img/chat.png';
+import todosThumb from 'Src/assets/img/todos.png';
+import chatApp from 'Src/assets/img/chat.png';
 
 class ShowcaseContainer extends Component {
     constructor(props){

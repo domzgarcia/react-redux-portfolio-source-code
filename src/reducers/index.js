@@ -10,10 +10,11 @@ import todos from 'Reducers/showcase/todos/todos.js';
 import chatStore from 'Reducers/showcase/chat/chatAppUI.js';
 
 export default combineReducers({
+    // todoapp
     todoAppUI,
     todos,
-
+    // chatapp
     chatStore,
-    
+    // route
     routerReducer
 });

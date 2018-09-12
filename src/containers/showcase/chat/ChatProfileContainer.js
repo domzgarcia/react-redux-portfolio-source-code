@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'react-router-dom/Link';
 import firebase from 'firebase';
-import {signInGoogle} from 'Actions/showcase/chat/action.js';
 import 'Components/showcase/chat/main.scss';
 
 class ChatProfileContainer extends Component {
@@ -21,10 +20,9 @@ class ChatProfileContainer extends Component {
         const provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider)
             .then( (resp) => {
-                self.props.signInGoogle(true);
+                console.log(resp);
             })
             .catch((e) => {
-                // self.props.signInGoogle();
                 alert('sign in disconnected \n' + JSON.stringify(e));
             });
     }
@@ -48,8 +46,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.chatStore.user.isAuthenticated
 });
 
-const mapDispatchToProps = {
-    signInGoogle: signInGoogle
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatProfileContainer);
+export default connect(mapStateToProps, null)(ChatProfileContainer);

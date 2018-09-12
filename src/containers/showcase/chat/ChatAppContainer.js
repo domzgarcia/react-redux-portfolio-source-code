@@ -24,16 +24,18 @@ class ChatAppContainer extends Component {
             projectId: 'myspace-a310c',
         }); 
         firebase.auth().onAuthStateChanged(this.handlerAuthStateChanged.bind(this));
+        // firebase.auth().signOut();
     }
 
-    handlerAuthStateChanged(user){ 
+    handlerAuthStateChanged(user){
+        console.log('CHANGE_MAKE_UPDATE_TO_USER');
         const bool = (user) ? true : false;
         if( ! user) return; 
         
         const userData = {
             displayName: user.displayName,
             email: user.email,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
         };
         this.props.signInGoogle(bool, userData);
     }
@@ -54,7 +56,7 @@ class ChatAppContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.chatStore.user.isAuthenticated
+    isAuthenticated: state.chatStore.appUI.isAuthenticated
 });
 
 const mapDispatchToProps = {
