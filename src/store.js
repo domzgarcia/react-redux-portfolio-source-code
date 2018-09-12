@@ -22,15 +22,32 @@ const initialState = {
     // Showcase -> Chat app
     chatStore: {
         appUI: {
-            popupType: undefined,
+            popupType: '',
             isAuthenticated: false,
         },
         user: {
             userData: null
         },
-        data: {
+        rooms: [ // Schema
+            /*{   
+                id: '<generated>', 
+                createdBy: '<user>', 
+                createdAt: '<date>', 
+                title: '<title>', 
+                description: '<description>',
+                isPrivate: false,
 
-        }
+                messages: [
+                    {
+                        id: '<generated>',
+                        user: '<username>',
+                        email: '<email>',
+                        userMessages: '<user messages>',
+                        timestamp: '<date>',
+                    }
+                ]
+            }*/
+        ]
     },
 };
 

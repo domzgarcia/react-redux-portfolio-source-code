@@ -5,6 +5,8 @@ import firebase from 'firebase';
 import ChatRoomListContainer from 'Containers/showcase/chat/ChatRoomListContainer.js';
 import ChatRoomPlatform from 'Containers/showcase/chat/ChatRoomPlatform.js';
 import DynamicPopUpContainer from 'Containers/DynamicPopUpContainer.js';
+import { POPUP_CREATE_ROOM } from 'Actions/showcase/chat/actionType.js';
+import { setPopUpType } from 'Actions/showcase/chat/action.js';
 
 class ChatRoomContainer extends Component {
     constructor(props){
@@ -20,6 +22,7 @@ class ChatRoomContainer extends Component {
         this.setState({
             isPopupOpen: !isPopupOpen
         });
+        this.props.setPopUpType(POPUP_CREATE_ROOM);
     }
 
     render (){
@@ -61,4 +64,8 @@ const mapStateToProps = (state) => ({
     userData: state.chatStore.user.userData
 });
 
-export default connect(mapStateToProps, null)(ChatRoomContainer);
+const mapDispatchToProps = {
+    setPopUpType: setPopUpType
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomContainer);
