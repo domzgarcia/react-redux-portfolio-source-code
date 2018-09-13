@@ -36,9 +36,7 @@ export const createRoom = (roomData) => {
 
         axios.post(path, { roomData })
             .then( (res) => {
-                const url = res.data.split('/');
-                const id  = url[url.length-1];
-                roomData['id'] = id;
+                roomData['id'] = res.roomId;
                 dispatch({
                     type: CREATE_ROOM,
                     payload: {
