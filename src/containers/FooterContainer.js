@@ -22,6 +22,9 @@ class FooterContainer extends Component {
         if(pathname.indexOf('todo')>-1){
             document.querySelector('title').innerText = 'Todo App - Showcase';
         }
+        if(pathname.indexOf('chat')>-1){
+            document.querySelector('title').innerText = 'Chat App - Showcase';
+        }
         if(pathname.indexOf('contact')>-1){
             document.querySelector('title').innerText = 'Contact Us';
         }

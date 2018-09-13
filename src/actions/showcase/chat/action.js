@@ -26,11 +26,16 @@ export const setPopUpType = (type) => {
 }
 
 export const createRoom = (roomData) => {
-    return {
-        type: CREATE_ROOM,
-        payload: {
-            roomData
-        }
+    return (dispatch) => {
+
+        // do asyn here...
+
+        dispatch({
+            type: CREATE_ROOM,
+            payload: {
+                roomData
+            }
+        });
     }
 }
 

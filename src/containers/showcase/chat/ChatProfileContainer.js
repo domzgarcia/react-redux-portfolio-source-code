@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'react-router-dom/Link';
-import firebase from 'firebase';
 import 'Components/showcase/chat/main.scss';
+import chatAppFirebase from 'Services/chatAppFirebase';
 
 class ChatProfileContainer extends Component {
 
@@ -16,9 +15,7 @@ class ChatProfileContainer extends Component {
     }
 
     handlerSignInGoogle(){
-        let self = this;
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider)
+        chatAppFirebase
             .then( (resp) => {
                 console.log(resp);
             })

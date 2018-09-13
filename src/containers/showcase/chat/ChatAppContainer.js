@@ -6,24 +6,20 @@ import ChatHeaderContainer from 'Containers/showcase/chat/ChatHeaderContainer.js
 import ChatRoomContainer from 'Containers/showcase/chat/ChatRoomContainer.js';
 
 import {signInGoogle} from 'Actions/showcase/chat/action.js';
-import firebase from 'firebase';
+import chatAppFirebase from 'Services/chatAppFirebase.js';
 
 class ChatAppContainer extends Component {
     constructor(props){
         super(props);
+        this.handlerAuthStateChanged = this.handlerAuthStateChanged.bind(this)
     }
     
     componentDidMount(){
-        if(!!firebase.apps.length) return;
+        if(!!chatAppFirebase.length()) return;
 
-        firebase.initializeApp({
-            apiKey: 'AIzaSyDFlY0a3c8dACo3t-nVL9g5VI631oFpdx8',
-            databaseURL: 'myspace-a310c.firebaseio.com',
-            authDomain: 'myspace-a310c.firebaseapp.com',
-            messagingSenderId: '581264642196',
-            projectId: 'myspace-a310c',
-        }); 
-        firebase.auth().onAuthStateChanged(this.handlerAuthStateChanged.bind(this));
+        chatAppFirebase.initialize();
+
+        chatAppFirebase.onChange(this.handlerAuthStateChanged);
         // firebase.auth().signOut();
     }
 

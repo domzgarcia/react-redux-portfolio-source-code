@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'react-router-dom/Link';
-import firebase from 'firebase';
 import {signInGoogle, changeScene} from 'Actions/showcase/chat/action.js';
 import { SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType';
+import chatAppFirebase from 'Services/chatAppFirebase';
 
 class ChatHeaderContainer extends Component {
     constructor(props){
@@ -21,7 +20,7 @@ class ChatHeaderContainer extends Component {
                         
                         this.props.changeScene(SCENE_ROOMS_LIST);
 
-                        firebase.auth().signOut()
+                        chatAppFirebase.signOut()
                         .then((resp) => {
                             this.props.signInGoogle();
                         })
