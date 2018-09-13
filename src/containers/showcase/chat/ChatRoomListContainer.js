@@ -25,7 +25,7 @@ class ChatRoomListContainer extends Component {
                     <ul className="list">
                         {rooms.map( (item, idx) => {
                             return ( 
-                                <li className="item" key={item.id} onClick={()=>{
+                                <li className="item" key={idx} onClick={()=>{
                                     this.handleSelectRoom(item.id);
                                 }}>
                                     <p className="name">{item.title}</p>
