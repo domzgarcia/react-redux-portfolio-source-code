@@ -15,7 +15,7 @@ class ChatProfileContainer extends Component {
     }
 
     handlerSignInGoogle(){
-        chatAppFirebase
+        chatAppFirebase.signInWithPopup()
             .then( (resp) => {
                 console.log(resp);
             })

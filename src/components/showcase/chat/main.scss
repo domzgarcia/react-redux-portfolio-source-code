@@ -278,3 +278,9 @@
         font-size: 12px;
     }
 }
+.nominatePasswordInput {
+    display: none;
+}
+.nominatePasswordInput.-active {
+    display: inline-block;
+}

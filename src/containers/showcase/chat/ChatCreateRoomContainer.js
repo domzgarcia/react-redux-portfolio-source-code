@@ -10,6 +10,7 @@ class ChatCreateRoomContainer extends Component {
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
         this.handleChangeRoomTitle = this.handleChangeRoomTitle.bind(this);
         this.handleAutoJoin = this.handleAutoJoin.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
 
         this.state = {
             roomTitle: '',
@@ -17,7 +18,14 @@ class ChatCreateRoomContainer extends Component {
             createdBy: '',
             createdAt: 0,
             isPrivate: false,
+            password: ''
         };
+    }
+
+    handlePassword(e){
+        this.setState({
+            password: e.target.value
+        });
     }
 
     fixName(title){
@@ -33,27 +41,29 @@ class ChatCreateRoomContainer extends Component {
 
         if(!this.state.roomTitle.length || !this.state.roomDescript.length) return;
         
-        
         const roomData = {
             title: this.fixName(this.state.roomTitle),
             description: this.state.roomDescript,
             createdBy: this.props.userData.email,
             createdAt: moment().format('MMMM Do YYYY, h:mm:ss a'),
             isPrivate: this.state.isPrivate,
+            password: (this.state.isPrivate) ? this.state.password : 'default'
         }
 
         e.target.reset();
-
         this.props.createRoom(roomData);
-        this.props.closeOpenPopup();
-
+        
         this.setState({
             roomTitle: '',
             roomDescript: '',
             createdBy: '',
             createdAt: 0,
             isPrivate: false,
-        });
+        },
+        () => {
+            this.props.closeOpenPopup();
+        }
+        );
     }
     handleChangeDescription(evt){
         this.setState({
@@ -73,8 +83,10 @@ class ChatCreateRoomContainer extends Component {
     
     render(){
         // console.log('debugState:', this.props.debugState);
+        let passwordVisibility = (this.state.isPrivate) ? '-active' : '';
 
         return (
+            
             <div>
                 <h3>Create Room</h3>
                 <hr></hr>
@@ -88,8 +100,12 @@ class ChatCreateRoomContainer extends Component {
                         <input type="text" onChange={this.handleChangeDescription}/>
                     </div>
                     <div className="form-group">
-                        <label className="form-lbl"> <input type="checkbox" checked={this.state.isPrivate} onClick={this.handleAutoJoin}/> Auto join</label>
+                        <label className="form-lbl"> <input type="checkbox" checked={this.state.isPrivate} onClick={this.handleAutoJoin}/> Nominate Password</label>
                     </div>
+                    <div className="form-group">
+                        <input type="text" onChange={this.handlePassword} className={"nominatePasswordInput "+passwordVisibility}/>
+                    </div>
+                    
                     <button type="submit">Create</button>
                 </form>
             </div>
