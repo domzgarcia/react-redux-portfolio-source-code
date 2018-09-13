@@ -16,8 +16,7 @@ class ChatRoomListContainer extends Component {
 
     render(){
         let {rooms} = this.props;
-
-        console.log(this.props.debugState);
+        // console.log(this.props.debugState);
 
         return (
             <div className="chatRoomCont">

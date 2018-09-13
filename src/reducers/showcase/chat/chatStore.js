@@ -48,9 +48,9 @@ const chatStore = (state=initialState, {type, payload}) => {
             return {...state};
         
         case CREATE_ROOM:
-            const {title, description, createdBy, createdAt, isPrivate, password} = payload.roomData;
+            const {title, description, createdBy, createdAt, isPrivate, password, id} = payload.roomData;
             const obj = {
-                id          : Date.now(),
+                id          : id,
                 createdBy   : createdBy,
                 createdAt   : createdAt,
                 title       : title,

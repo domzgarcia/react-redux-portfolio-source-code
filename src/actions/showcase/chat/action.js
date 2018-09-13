@@ -1,6 +1,9 @@
 import { USER_AUTH, SCENE_CHANGE, CREATE_ROOM, CLOSE_OPEN_POPUP } from "Actions/showcase/chat/actionType.js";
 import axios from 'axios';
-const baseUrl = 'https://us-central1-myspace-a310c.cloudfunctions.net/';
+
+const baseUrl = 'https://us-central1-myspace-a310c.cloudfunctions.net';
+
+// const baseUrl = 'https://domz-garcia.tk/';
 
 export const signInGoogle = (bool = false, userData = {}) => {
     return {
@@ -29,26 +32,23 @@ export const setPopUpType = (type) => {
 
 export const createRoom = (roomData) => {
     return (dispatch) => {
-        
-        const path = baseUrl.concat('addRoom').concat('?room=sampleroom');
-        
-        console.log('createRoom', path);
+        const path = baseUrl.concat('/addRoom');
 
-        // do asyn here...
-        axios.get(path)
-            .then( (resp) => {
-                console.log('succ', resp);
+        axios.post(path, { roomData })
+            .then( (res) => {
+                const url = res.data.split('/');
+                const id  = url[url.length-1];
+                roomData['id'] = id;
+                dispatch({
+                    type: CREATE_ROOM,
+                    payload: {
+                        roomData
+                    }
+                });
             })
-            .catch((resp) =>{
-                console.log('error', resp);
-            })
-
-        dispatch({
-            type: CREATE_ROOM,
-            payload: {
-                roomData
-            }
-        });
+            .catch((res) =>{
+                console.log('error', res);
+            });
     }
 }
 
