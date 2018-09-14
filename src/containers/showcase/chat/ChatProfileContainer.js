@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import 'Components/showcase/chat/main.scss';
-import chatAppFirebase from 'Services/chatAppFirebase';
+import chatAppFirebase from 'Services/chatAppFirebase.js';
+import {addNewUser} from 'Actions/showcase/chat/action.js';
 
 class ChatProfileContainer extends Component {
 
@@ -17,7 +18,19 @@ class ChatProfileContainer extends Component {
     handlerSignInGoogle(){
         chatAppFirebase.signInWithPopup()
             .then( (resp) => {
-                console.log(resp);
+                console.log('respuser', resp.user);
+                let {user} = resp;
+
+                if(!user) return;
+
+                const userData = {
+                    displayName: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                    uid: user.uid,
+                };
+
+                this.props.addNewUser(userData);
             })
             .catch((e) => {
                 alert('sign in disconnected \n' + JSON.stringify(e));
@@ -40,7 +53,11 @@ class ChatProfileContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.chatStore.user.isAuthenticated
+    isAuthenticated: state.chatStore.user.isAuthenticated,
 });
 
-export default connect(mapStateToProps, null)(ChatProfileContainer);
+const mapDispatchToProps = {
+    addNewUser: addNewUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatProfileContainer);

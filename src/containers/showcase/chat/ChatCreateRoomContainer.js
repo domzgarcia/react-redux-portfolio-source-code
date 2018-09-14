@@ -15,7 +15,8 @@ class ChatCreateRoomContainer extends Component {
         this.state = {
             roomTitle: '',
             roomDescript: '',
-            createdBy: '',
+            userEmail: '',
+            displayName: '',
             createdAt: 0,
             isPrivate: false,
             password: ''
@@ -42,11 +43,13 @@ class ChatCreateRoomContainer extends Component {
         if(!this.state.roomTitle.length || !this.state.roomDescript.length) return;
         
         const roomData = {
+            uid: this.props.userData.uid,
             title: this.fixName(this.state.roomTitle),
             description: this.state.roomDescript,
-            createdBy: this.props.userData.email,
-            createdAt: moment().format('MMMM Do YYYY, h:mm:ss a'),
-            isPrivate: this.state.isPrivate,
+            email: this.props.userData.email,
+            name: this.props.userData.displayName,
+            created_at: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            privated: this.state.isPrivate,
             password: (this.state.isPrivate) ? this.state.password : 'default'
         }
 
@@ -56,7 +59,8 @@ class ChatCreateRoomContainer extends Component {
         this.setState({
             roomTitle: '',
             roomDescript: '',
-            createdBy: '',
+            userEmail: '',
+            displayName: '',
             createdAt: 0,
             isPrivate: false,
         },

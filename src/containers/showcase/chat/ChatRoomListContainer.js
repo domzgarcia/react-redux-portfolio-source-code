@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {changeScene} from 'Actions/showcase/chat/action.js';
-import { SCENE_CHATROOM } from 'Actions/showcase/chat/actionType';
+import {joinRoom} from 'Actions/showcase/chat/action.js';
 
 class ChatRoomListContainer extends Component {
     constructor(props){
@@ -9,28 +8,27 @@ class ChatRoomListContainer extends Component {
         this.handleSelectRoom = this.handleSelectRoom.bind(this);
     }
 
-    handleSelectRoom(id){
-        console.log(id);
-        this.props.changeScene(SCENE_CHATROOM);
+    handleSelectRoom(roomId=0){
+        let {userData} = this.props;
+        this.props.joinRoom({rid: roomId, uid: userData.uid});
     }
 
     render(){
         let {rooms} = this.props;
         // console.log(this.props.debugState);
-
         return (
             <div className="chatRoomCont">
                 <div className="roomsCont">
                 <p className="lbl-rooms"> Available Rooms:</p>
                     <ul className="list">
-                        {rooms.map( (item, idx) => {
+                        {rooms.map( (room, idx) => {
                             return ( 
                                 <li className="item" key={idx} onClick={()=>{
-                                    this.handleSelectRoom(item.id);
+                                    this.handleSelectRoom(room.id);
                                 }}>
-                                    <p className="name">{item.title}</p>
-                                    <p className="description">{item.description}</p>
-                                    <p className="createdBy">{item.createdBy}</p>
+                                    <p className="name">{room.title}</p>
+                                    <p className="description">{room.description}</p>
+                                    <p className="createdBy">{room.name}</p>
                                 </li>
                             )
                         })}
@@ -46,10 +44,11 @@ class ChatRoomListContainer extends Component {
 const mapStateToProps = (state) => ({
     debugState: state,
     rooms: state.chatStore.rooms,
+    userData: state.chatStore.user.userData
 });
 
 const mapDispatchToProps = {
-    changeScene: changeScene
+    joinRoom: joinRoom
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomListContainer);

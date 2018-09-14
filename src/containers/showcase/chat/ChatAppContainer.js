@@ -27,11 +27,12 @@ class ChatAppContainer extends Component {
         console.log('CHANGE_MAKE_UPDATE_TO_USER');
         const bool = (user) ? true : false;
         if( ! user) return; 
-        
+        console.log(user);
         const userData = {
             displayName: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
+            uid: user.uid,
         };
         this.props.signInGoogle(bool, userData);
     }

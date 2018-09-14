@@ -14,10 +14,10 @@ let initialState =  {
         /*{   
             id: '<generated>', 
             createdBy: '<user>', 
-            createdAt: '<date>', 
+            created_at: '<date>', 
             title: '<title>', 
             description: '<description>',
-            isPrivate: false,
+            privated: false,
 
             messages: [
                 {
@@ -48,18 +48,30 @@ const chatStore = (state=initialState, {type, payload}) => {
             return {...state};
         
         case CREATE_ROOM:
-            const {title, description, createdBy, createdAt, isPrivate, password, id} = payload.roomData;
+            const {
+                title, 
+                description, 
+                email, 
+                created_at, 
+                privated, 
+                password, 
+                id,
+                name,
+                uid
+                } = payload.roomData;
+
             const obj = {
-                id          : id,
-                createdBy   : createdBy,
-                createdAt   : createdAt,
-                title       : title,
-                description : description,
-                isPrivate   : isPrivate,
-                password    : password 
+                uid           : uid,
+                id            : id,
+                created_at    : created_at,
+                email         : email,
+                name          : name,
+                title         : title,
+                description   : description,
+                privated      : privated,
+                password      : password 
             };
             state.rooms.push(obj);
-
             return {...state};
         
         case SCENE_CHANGE:
