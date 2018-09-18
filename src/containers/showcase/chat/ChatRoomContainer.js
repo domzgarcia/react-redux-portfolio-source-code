@@ -4,7 +4,7 @@ import ChatRoomListContainer from 'Containers/showcase/chat/ChatRoomListContaine
 import ChatRoomPlatform from 'Containers/showcase/chat/ChatRoomPlatform.js';
 import DynamicPopUpContainer from 'Containers/DynamicPopUpContainer.js';
 import { POPUP_CREATE_ROOM, SCENE_CHATROOM, SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType.js';
-import { setPopUpType, closeOpenPopup, changeScene } from 'Actions/showcase/chat/action.js';
+import { setPopUpType, closeOpenPopup, changeScene, fetchRooms } from 'Actions/showcase/chat/action.js';
 
 class ChatRoomContainer extends Component {
     constructor(props){
@@ -20,6 +20,10 @@ class ChatRoomContainer extends Component {
 
     handlerLeaveRoom(){
         this.props.changeScene(SCENE_ROOMS_LIST);
+    }
+
+    componentDidMount(){
+        this.props.fetchRooms();
     }
 
     render (){
@@ -76,7 +80,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     setPopUpType: setPopUpType,
     closeOpenPopup: closeOpenPopup,
-    changeScene: changeScene
+    changeScene: changeScene,
+    fetchRooms: fetchRooms,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomContainer);

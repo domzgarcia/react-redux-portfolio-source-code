@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {fetchRoomData} from 'Actions/showcase/chat/action.js';
 
 class ChatRoomPlatform extends Component {
     constructor(props){
         super(props);
     }
+
+    componentWillReceiveProps(){
+        const {rid} = this.props;
+        this.props.fetchRoomData(rid);
+    }
+
     render(){
         return (
             <div className="chatplatform">  
@@ -124,4 +131,12 @@ class ChatRoomPlatform extends Component {
     }
 }
 
-export default ChatRoomPlatform;
+const mapStateToProps = (state) => ({
+    rid: state.chatStore.user.selectedRoom
+});
+
+const mapDispatchToProps = {
+    fetchRoomData: fetchRoomData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomPlatform);

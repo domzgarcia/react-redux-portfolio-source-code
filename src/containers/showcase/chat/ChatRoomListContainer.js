@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {joinRoom} from 'Actions/showcase/chat/action.js';
+import {joinRoom, changeScene} from 'Actions/showcase/chat/action.js';
+import {SCENE_CHATROOM} from 'Actions/showcase/chat/actionType';
 
 class ChatRoomListContainer extends Component {
     constructor(props){
@@ -8,9 +9,15 @@ class ChatRoomListContainer extends Component {
         this.handleSelectRoom = this.handleSelectRoom.bind(this);
     }
 
-    handleSelectRoom(roomId=0){
+    handleSelectRoom(roomId = 0){
         let {userData} = this.props;
-        this.props.joinRoom({rid: roomId, uid: userData.uid});
+
+        this.props.joinRoom(
+            {rid: roomId, uid: userData.uid}, 
+            () => {
+            // callback after connections added
+            this.props.changeScene(SCENE_CHATROOM);
+            });
     }
 
     render(){
@@ -24,7 +31,7 @@ class ChatRoomListContainer extends Component {
                         {rooms.map( (room, idx) => {
                             return ( 
                                 <li className="item" key={idx} onClick={()=>{
-                                    this.handleSelectRoom(room.id);
+                                    this.handleSelectRoom(room.rid);
                                 }}>
                                     <p className="name">{room.title}</p>
                                     <p className="description">{room.description}</p>
@@ -48,7 +55,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    joinRoom: joinRoom
-}
+    joinRoom: joinRoom,
+    changeScene: changeScene
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomListContainer);

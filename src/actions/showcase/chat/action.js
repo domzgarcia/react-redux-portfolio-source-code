@@ -3,8 +3,11 @@ import {
     SCENE_CHANGE, 
     CREATE_ROOM, 
     CLOSE_OPEN_POPUP, 
-    JOIN_ROOM 
+    JOIN_ROOM, 
+    POPULATE_ROOMS
 } from "Actions/showcase/chat/actionType.js";
+
+import _ from 'lodash';
 
 import axios from 'axios';
 
@@ -39,6 +42,35 @@ export const setPopUpType = (type) => {
     }
 }
 
+export const fetchRooms = () => {
+    return (dispatch) => {
+        const path = baseUrl.concat('fetchRooms');
+
+        axios.get(path)
+            .then((resp) =>{
+                let objectsToArrayObjects = [];
+
+                if(_.values(resp.data.rooms).some(x => x !== undefined) ){
+                    objectsToArrayObjects = Object.keys(resp.data.rooms).map(function(key) {
+                        return resp.data.rooms[key];
+                    });
+                }
+
+                console.log(objectsToArrayObjects);
+
+                dispatch({
+                    type: POPULATE_ROOMS,
+                    payload: {
+                        rooms: objectsToArrayObjects
+                    }
+                });
+            })
+            .catch((err) => {
+                if(err) new Error('Error:Fetch-room');
+            });
+    }
+}
+
 export const createRoom = (roomData) => {
     return (dispatch) => {
         const path = baseUrl.concat('addRoom');
@@ -47,17 +79,31 @@ export const createRoom = (roomData) => {
             .then( (res) => {
                 const url = res.data.result.toString().split('/');
                 const id  = url[url.length-1];
-                roomData['id'] = id;
+                roomData.rid = id;
                 // local copy
-
                 console.log('NEW ROOM ADDED', res, roomData);
 
-                dispatch({
-                    type: CREATE_ROOM,
-                    payload: {
-                        roomData
-                    }
-                });
+                let delay = setTimeout(() => {
+                    clearTimeout(delay);
+
+                    const path = baseUrl.concat('storeRoomId');
+                    axios.post(path, {rid: id})
+                        .then( (res) => {
+                            // sync RID to newly added data
+                            console.log('STORED ROOM ID', res);
+
+                            dispatch({
+                                type: CREATE_ROOM,
+                                payload: {
+                                    roomData
+                                }
+                            });
+                        })
+                        .catch( (err) => {
+                            if(err) return new Error('Error in Store Room Id');
+                        });
+
+                }, 100);
             })
             .catch((err) => {
                 if(err) return new Error('Error in Add Room');
@@ -78,32 +124,57 @@ export const addNewUser = (userData) => {
     }
 }
 
-export const changeScene = (sceneType) => {
+export const changeScene = (sceneType, data={}) => {
     return {
         type: SCENE_CHANGE,
         payload: {
-            sceneType
+            sceneType,
+            payload: {
+                data
+            }
         }
     }
 }
 
-export const joinRoom = (userJoining) => {
+export const joinRoom = (userInfo, callback=undefined) => {
     return (dispatch) => {
         const path = baseUrl.concat('joinRoom');
-        
-        console.log(userJoining);
 
-        axios.post(path, userJoining)
+        console.log('SELECTED:', userInfo);
+
+        const rid = userInfo.rid;
+
+        axios.post(path, { userInfo })
             .then((res) => {
-                console.log(res);
+                // ...
+                console.log('joined room', res, rid);
+                callback();
+
+                dispatch({
+                    type: JOIN_ROOM,
+                    payload: {
+                        rid
+                    }
+                });
             })
             .catch((err)=>{
                 if(err) return new Error('Error in join Room');
             })
-        // local copy
-        // dispath({
-        //     type: JOIN_ROOM,
-        //     userJoining
-        // });
+    }
+}
+
+export const fetchRoomData = (rid) => {
+    console.log(rid);
+
+    return (dispatch) => {
+        const path = baseUrl.concat(`fetchRoomData/${rid}`);
+
+        axios.get(path)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                if(err) return new Error('Error in fetching room data');
+            });
     }
 }

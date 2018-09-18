@@ -50,7 +50,8 @@ class ChatCreateRoomContainer extends Component {
             name: this.props.userData.displayName,
             created_at: moment().format('MMMM Do YYYY, h:mm:ss a'),
             privated: this.state.isPrivate,
-            password: (this.state.isPrivate) ? this.state.password : 'default'
+            password: (this.state.isPrivate) ? this.state.password : 'default',
+            rid: 0
         }
 
         e.target.reset();
