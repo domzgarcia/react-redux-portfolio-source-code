@@ -4,7 +4,8 @@ import {
     CREATE_ROOM, 
     CLOSE_OPEN_POPUP, 
     JOIN_ROOM, 
-    POPULATE_ROOMS
+    POPULATE_ROOMS,
+    POPULATE_MESSAGES
 } from "Actions/showcase/chat/actionType.js";
 
 import _ from 'lodash';
@@ -49,14 +50,15 @@ export const fetchRooms = () => {
         axios.get(path)
             .then((resp) =>{
                 let objectsToArrayObjects = [];
-
                 if(_.values(resp.data.rooms).some(x => x !== undefined) ){
                     objectsToArrayObjects = Object.keys(resp.data.rooms).map(function(key) {
+                        // change messages object to empty array
+                        resp.data.rooms[key]['messages'] = [];
                         return resp.data.rooms[key];
                     });
                 }
 
-                console.log(objectsToArrayObjects);
+                console.log('SSSS', objectsToArrayObjects);
 
                 dispatch({
                     type: POPULATE_ROOMS,
@@ -74,24 +76,18 @@ export const fetchRooms = () => {
 export const createRoom = (roomData) => {
     return (dispatch) => {
         const path = baseUrl.concat('addRoom');
-
         axios.post(path, { roomData })
             .then( (res) => {
                 const url = res.data.result.toString().split('/');
                 const id  = url[url.length-1];
                 roomData.rid = id;
-                // local copy
-                console.log('NEW ROOM ADDED', res, roomData);
 
                 let delay = setTimeout(() => {
                     clearTimeout(delay);
-
                     const path = baseUrl.concat('storeRoomId');
                     axios.post(path, {rid: id})
                         .then( (res) => {
-                            // sync RID to newly added data
-                            console.log('STORED ROOM ID', res);
-
+                            // sync RID to newly added data in firebase
                             dispatch({
                                 type: CREATE_ROOM,
                                 payload: {
@@ -139,42 +135,56 @@ export const changeScene = (sceneType, data={}) => {
 export const joinRoom = (userInfo, callback=undefined) => {
     return (dispatch) => {
         const path = baseUrl.concat('joinRoom');
-
-        console.log('SELECTED:', userInfo);
-
+        // console.log('SELECTED:', userInfo);
         const rid = userInfo.rid;
-
         axios.post(path, { userInfo })
             .then((res) => {
                 // ...
                 console.log('joined room', res, rid);
-                callback();
-
                 dispatch({
                     type: JOIN_ROOM,
                     payload: {
                         rid
                     }
                 });
+                // wait state change before passing to scene : chatroom
+                const delay = setTimeout(()=>{ clearTimeout(delay); callback(); },100);
             })
             .catch((err)=>{
                 if(err) return new Error('Error in join Room');
             })
     }
 }
-
+/*
 export const fetchRoomData = (rid) => {
-    console.log(rid);
-
     return (dispatch) => {
-        const path = baseUrl.concat(`fetchRoomData/${rid}`);
-
-        axios.get(path)
+        const path = baseUrl.concat('fetchRoomData');
+        axios.post(path, {rid})
             .then((res) => {
-                console.log(res);
+                console.log('FETCHED ROOM DATA', res);
+                dispatch({
+                    type: POPULATE_MESSAGES,
+                    payload: {
+                        messages: res.room.messages
+                    }
+                });
             })
             .catch((err) => {
                 if(err) return new Error('Error in fetching room data');
+            });
+    }
+}
+*/
+export const createMessage = (messageData) => {
+    return (dispatch)  => {
+        const path = baseUrl.concat('createMessage');
+        axios.post(path, {messageData})
+            .then((res) => {
+                console.log('Success create message', res);
+                // dispatch
+            })
+            .catch((err) => {
+                if(err) return new Error('Error in create Message.');
             });
     }
 }

@@ -19,8 +19,7 @@ let initialState =  {
             title: '<title>', 
             description: '<description>',
             privated: false,
-
-            messages: [
+            messages: {} // [
                 {
                     title,
                     description,

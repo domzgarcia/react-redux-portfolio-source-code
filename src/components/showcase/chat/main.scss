@@ -158,13 +158,22 @@
             max-width: 65%;
             width: 100%;
             border: 1px solid #eee;
-
-            .messages {
-                max-height: 500px;
-                padding:15px;
-                margin: 0;
-                list-style: none;
+            padding:15px;
+            
+            .overflowY {
                 overflow-y: auto;
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+                height: 500px;
+            }
+
+            #messages {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                list-style: none;
             }
         }
 
@@ -174,14 +183,22 @@
             display: flex;
             flex-direction: row;
 
-            textarea {
+            form {
+                display: flex;
+                flex-direction: row;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            form textarea,
+            form input, {
                 height: 50px;
                 max-width: 85%;
                 width: 100%;
                 display: block;
             }
 
-            .btnSend {
+            form .btnSend {
                 height: 50px;
                 max-width: 15%;
                 width: 100%;
@@ -225,8 +242,9 @@
     .username {
         font-weight: bold;
         margin-bottom: 3px;
-        max-width: 50%;
+        max-width: 100%;
         width: 100%;
+
         > span:first-child {
             text-decoration: underline;
         }

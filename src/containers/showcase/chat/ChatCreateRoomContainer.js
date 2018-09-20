@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {createRoom,closeOpenPopup} from 'Actions/showcase/chat/action.js';
+import {createRoom, closeOpenPopup} from 'Actions/showcase/chat/action.js';
 
 class ChatCreateRoomContainer extends Component {
     constructor(props){
@@ -48,13 +48,15 @@ class ChatCreateRoomContainer extends Component {
             description: this.state.roomDescript,
             email: this.props.userData.email,
             name: this.props.userData.displayName,
-            created_at: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            created_at: Date.now(),//moment().format('MMMM Do YYYY, h:mm:ss a'),
             privated: this.state.isPrivate,
             password: (this.state.isPrivate) ? this.state.password : 'default',
-            rid: 0
-        }
+            rid: 0,
+            messages: {}
+        };
 
         e.target.reset();
+
         this.props.createRoom(roomData);
         
         this.setState({

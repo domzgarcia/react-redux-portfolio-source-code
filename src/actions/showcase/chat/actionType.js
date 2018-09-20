@@ -9,3 +9,5 @@ export const SCENE_CHANGE = "scene:change";
 export const JOIN_ROOM = "room:join-room";
 export const CREATE_ROOM = "room:create-room";
 export const POPULATE_ROOMS = "room:populate";
+
+export const POPULATE_MESSAGES = 'message:populate';

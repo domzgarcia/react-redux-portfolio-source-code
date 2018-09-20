@@ -15,8 +15,7 @@ class ChatRoomListContainer extends Component {
         this.props.joinRoom(
             {rid: roomId, uid: userData.uid}, 
             () => {
-            // callback after connections added
-            this.props.changeScene(SCENE_CHATROOM);
+                this.props.changeScene(SCENE_CHATROOM);
             });
     }
 
