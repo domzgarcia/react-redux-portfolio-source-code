@@ -11,3 +11,5 @@ export const CREATE_ROOM = "room:create-room";
 export const POPULATE_ROOMS = "room:populate";
 
 export const POPULATE_MESSAGES = 'message:populate';
+export const EMPTY_PER_ROOM_MESSAGE = 'message:empty';
+export const ADD_MESSAGE = 'message:add';

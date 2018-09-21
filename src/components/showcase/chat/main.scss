@@ -160,12 +160,12 @@
             border: 1px solid #eee;
             padding:15px;
             
-            .overflowY {
+            .bodyOverflowY {
                 overflow-y: auto;
                 width: 100%;
                 height: 100%;
                 max-width: 100%;
-                height: 500px;
+                height: 300px;
             }
 
             #messages {
@@ -260,6 +260,9 @@
         border-radius: 15px;
         background-color: #eee;
         display: inline-block;
+    }
+    .message.-self {
+        background-color: #aaa;
     }
 }
 .item-user.-right {

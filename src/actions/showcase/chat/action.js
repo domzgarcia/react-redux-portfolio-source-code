@@ -5,7 +5,9 @@ import {
     CLOSE_OPEN_POPUP, 
     JOIN_ROOM, 
     POPULATE_ROOMS,
-    POPULATE_MESSAGES
+    POPULATE_MESSAGES,
+    EMPTY_PER_ROOM_MESSAGE,
+    ADD_MESSAGE
 } from "Actions/showcase/chat/actionType.js";
 
 import _ from 'lodash';
@@ -181,10 +183,28 @@ export const createMessage = (messageData) => {
         axios.post(path, {messageData})
             .then((res) => {
                 console.log('Success create message', res);
-                // dispatch
             })
             .catch((err) => {
                 if(err) return new Error('Error in create Message.');
             });
     }
 }
+
+export const emptyMessagesByRoomId = (rid) => {
+    return {
+        type: EMPTY_PER_ROOM_MESSAGE,
+        payload: {
+            rid
+        }
+    }
+};
+
+export const addMessage = (rid, messageData) => {
+    return {
+        type: ADD_MESSAGE,
+        payload: {
+            rid,
+            messageData
+        }
+    };
+};

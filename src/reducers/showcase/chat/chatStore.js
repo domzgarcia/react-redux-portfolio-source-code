@@ -1,4 +1,13 @@
-import { USER_AUTH, POPUP_CREATE_ROOM, CREATE_ROOM, CLOSE_OPEN_POPUP, SCENE_ROOMS_LIST, POPULATE_ROOMS, SCENE_CHANGE, JOIN_ROOM} from "Actions/showcase/chat/actionType";
+import { USER_AUTH, 
+    POPUP_CREATE_ROOM, 
+    CREATE_ROOM, 
+    CLOSE_OPEN_POPUP, 
+    SCENE_ROOMS_LIST, 
+    POPULATE_ROOMS, 
+    SCENE_CHANGE, 
+    JOIN_ROOM, 
+    EMPTY_PER_ROOM_MESSAGE,
+    ADD_MESSAGE } from "Actions/showcase/chat/actionType";
 
 let initialState =  {
     appUI: {
@@ -11,6 +20,7 @@ let initialState =  {
         userData: null,
         selectedRoom: 'not-set',
     },
+    tempMessages: [],
     rooms: [ // Schema
         /*{   
             id: '<generated>', 
@@ -38,6 +48,14 @@ let initialState =  {
 
 const chatStore = (state=initialState, {type, payload}) => {
     switch(type){
+        case EMPTY_PER_ROOM_MESSAGE:
+            const empty = [];
+            return {...state, tempMessages: empty};
+        
+        case ADD_MESSAGE: 
+            state.tempMessages.push(payload.messageData);
+            return {...state};
+
         case CLOSE_OPEN_POPUP: 
             state.appUI.isPopupOpen = !state.appUI.isPopupOpen;
             return {...state};
