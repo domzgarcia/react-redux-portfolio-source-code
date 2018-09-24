@@ -2,13 +2,13 @@
 import firebase from 'firebase';
 
 // with Practice of concise method notation
-const chatAppFirebase = {
-    
+let chatAppFirebase = {
+    app: null,
     length() {
         return firebase.apps.length;
     },
     initialize() {
-        firebase.initializeApp({
+        chatAppFirebase.app = firebase.initializeApp({
             apiKey: 'AIzaSyDFlY0a3c8dACo3t-nVL9g5VI631oFpdx8',
             databaseURL: 'myspace-a310c.firebaseio.com',
             authDomain: 'myspace-a310c.firebaseapp.com',
@@ -17,14 +17,24 @@ const chatAppFirebase = {
         });
     },
     onChange(callback){
-        return firebase.auth().onAuthStateChanged(callback);
+        chatAppFirebase.app.auth().onAuthStateChanged(callback);
     },
+    onChildAdded(rid, callback){
+        chatAppFirebase.app.database().ref(`/rooms/${rid}/messages`)
+        .on('child_added', callback);
+    },
+    // Promise<any>
     signInWithPopup(){
         const provider = new firebase.auth.GoogleAuthProvider();
-        return firebase.auth().signInWithPopup(provider);
+        return chatAppFirebase.app.auth().signInWithPopup(provider);
     },
+    // Promise<any>
     signOut(){
-        return firebase.auth().signOut();
+        return chatAppFirebase.app.auth().signOut();
+    },
+    detached(rid, callback){
+        chatAppFirebase.app.database().ref(`/rooms/${rid}/messages`)
+        .off('child_added', callback);
     }
 }
 

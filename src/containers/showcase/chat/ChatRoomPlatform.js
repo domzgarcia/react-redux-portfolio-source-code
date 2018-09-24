@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {createMessage,emptyMessagesByRoomId, addMessage} from 'Actions/showcase/chat/action.js';
+import {createMessage,
+    emptyMessagesByRoomId, 
+    addMessage, 
+    fetchRoomData} from 'Actions/showcase/chat/action.js';
+
 import firebase from 'firebase';
-import moment from 'moment';
+
+import ChatRoomMessage from 'Containers/showcase/chat/ChatRoomMessage.js';
+import FlickrLoaderComp from 'Components/FlickrLoaderComp'; 
+import chatAppFirebase from 'Services/chatAppFirebase';
 
 class ChatRoomPlatform extends Component {
     constructor(props){
@@ -15,27 +22,21 @@ class ChatRoomPlatform extends Component {
         };
     }
 
-    componentWillMount(){
+    componentDidMount(){
         const {rid} = this.props;
         this.props.emptyMessagesByRoomId(rid);
+        chatAppFirebase.onChildAdded(rid, this.handleAddedMessageSocket);
+        this.props.fetchRoomData();
     }
 
-    componentDidMount(){
-        const {rid, rooms} = this.props;
-        // let currentRoom = rooms.filter( (room) => { return room.rid === rid })[0];
-        firebase.database().ref(`/rooms/${rid}/messages`)
-            .on('child_added', this.handleAddedMessageSocket);
-    }
-
-    componentWillReceiveProps(){
-        // alert('Receiving\n'+JSON.stringify(this.props,null,2));
+    componentWillUnmount(){
+        const {rid} = this.props;
+        chatAppFirebase.detached(rid, this.handleAddedMessageSocket);
     }
 
     handleSubmit(evt){
         evt.preventDefault();
-
         const {rid, userData} = this.props;
-
         const messageData = {
             rid: rid,
             displayName: userData.displayName,
@@ -46,9 +47,13 @@ class ChatRoomPlatform extends Component {
         };
 
         if(!!this.state.text){
+
             this.props.createMessage(messageData);
-            this.setState({ text: '' });
+            
+            this.setState({ text: '' },
+            () => {} );
         }
+        return false;
         // evt.target.reset();
     }
 
@@ -63,58 +68,46 @@ class ChatRoomPlatform extends Component {
         const message = snapshot.val();
         const {rid} = this.props;
         this.props.addMessage(rid, message);
-        // scroll to top
+
+        const delay = setTimeout(() => {
+            clearTimeout(delay);
+            const listItems = document.querySelectorAll('#messages li');
+            listItems[listItems.length-1].scrollIntoView()
+        },14);
     }
 
     render(){
-        let {rooms, messages, rid} = this.props;
-        let {userData} = this.props;
+        let {rooms, rid, tempMessages, messageCycle} = this.props;
         let room = rooms.filter((room) => {
             return room.rid === rid;
         })[0];
 
-        const utilsTimeAgo = function(epoch){
-            return moment(epoch).fromNow();
-        }
-
-        const roomComp = function(messages){
-            // if(room.hasOwnProperty('messages')){
-                
-            if(!messages.length) return;
-
-            return messages.map((message, idx)=> {
-                let toRight = (message.email === userData.email) ? '-right' : '';
-                let self    = (message.email === userData.email) ? '-self' : '';
-                return (
-                    <li key={idx}>
-                        <div className={"item-user "+toRight}>
-                            <p className="username">
-                                <span>{message.displayName}</span>
-                                <span className="timestamp">&nbsp;&lt;{utilsTimeAgo(message.createdAt)}&gt;</span>
-                            </p>
-                            <span className={"message "+self}>{message.text}</span>                                    
-                        </div>
-                    </li>
-                )
-            })
-        }
-
         return (
             <div className="chatplatform">  
                 <div className="chatHeaderPanel">
-                    <p className="chatName">{room.title}</p>
-                    <p className="chatDesc">{room.description}</p>
+                    <p className="chatName">{(room.title) ? room.title : 'Loading...'}</p>
+                    <p className="chatDesc">{(room.description) ? room.description : 'Loading...'}</p>
                 </div>
                 
                 <div className="messagesCont">
                     {/* Message Panel */}
                     <div className="messagesPanelCont">
-                        <div className="bodyOverflowY">
+
+                        <div className="bodyOverflowY -relative-content">
                             <ul id="messages">
-                                {roomComp(messages)}
+                            <FlickrLoaderComp isLoading={messageCycle}/>
+                            {   (!!tempMessages.length)
+                                ? tempMessages.map( (message, idx) => {
+                                    return (<li key={idx}>
+                                        <ChatRoomMessage {...message} />
+                                    </li>)
+                                })
+                                : (messageCycle===false && tempMessages.length===0)
+                                ? (<p>Be the first to make a message here! :D</p>)
+                                : <span></span>
+                            }
                             </ul>
                         </div>
-
                         <div className="inputPanelCont">
                             <form onSubmit={this.handleSubmit}>
                                 <textarea name="messages" 
@@ -166,16 +159,18 @@ class ChatRoomPlatform extends Component {
 
 const mapStateToProps = (state) => ({
     rid: state.chatStore.user.selectedRoom,
+    tempMessages: state.chatStore.tempMessages,
     userData: state.chatStore.user.userData,
     rooms: state.chatStore.rooms,
-    messages: state.chatStore.tempMessages,
-    debugState: state,
+    messageCycle: state.chatStore.appUI.messageCycle,
 });
 
+
 const mapDispatchToProps = {
-    createMessage           : createMessage,
     emptyMessagesByRoomId   : emptyMessagesByRoomId,
-    addMessage              : addMessage
+    createMessage           : createMessage,
+    addMessage              : addMessage,
+    fetchRoomData           : fetchRoomData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomPlatform);

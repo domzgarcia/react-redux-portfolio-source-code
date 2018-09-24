@@ -7,7 +7,8 @@ import { USER_AUTH,
     SCENE_CHANGE, 
     JOIN_ROOM, 
     EMPTY_PER_ROOM_MESSAGE,
-    ADD_MESSAGE } from "Actions/showcase/chat/actionType";
+    ADD_MESSAGE, 
+    PULL_MESSAGE_CYCLE} from "Actions/showcase/chat/actionType";
 
 let initialState =  {
     appUI: {
@@ -15,64 +16,65 @@ let initialState =  {
         isAuthenticated: false,
         isPopupOpen: false,
         scene: SCENE_ROOMS_LIST,
+        isMessageOnProcess: false,
+        messageCycle: false
     },
     user: {
         userData: null,
         selectedRoom: 'not-set',
     },
     tempMessages: [],
-    rooms: [ // Schema
-        /*{   
-            id: '<generated>', 
-            createdBy: '<user>', 
-            created_at: '<date>', 
-            title: '<title>', 
-            description: '<description>',
-            privated: false,
-            messages: {} // [
-                {
-                    title,
-                    description,
-                    email,
-                    created_at,
-                    privated,
-                    password,
-                    id,
-                    name,
-                    uid,
-                }
-            ]
-        }*/
-    ]
+    rooms: [],
 }
 
 const chatStore = (state=initialState, {type, payload}) => {
     switch(type){
         case EMPTY_PER_ROOM_MESSAGE:
-            const empty = [];
-            return {...state, tempMessages: empty};
-        
-        case ADD_MESSAGE: 
-            state.tempMessages.push(payload.messageData);
-            return {...state};
+            return {...state, 
+                tempMessages: [] };
+
+        case ADD_MESSAGE:
+            // prevention in case
+            let allow = true;
+            state.tempMessages.map((message, idx) => {
+                if(message.createdAt === payload.messageData.createdAt){
+                    allow = false;
+                }
+            });
+
+            return {...state,
+                tempMessages: (allow) 
+                ? [...state.tempMessages, payload.messageData] 
+                : [...state.tempMessages]
+            };
+
+        case PULL_MESSAGE_CYCLE:
+            const bool1 = !state.appUI.messageCycle;
+            return {...state,
+                    appUI: {...state.appUI, messageCycle: bool1 }
+                };
 
         case CLOSE_OPEN_POPUP: 
-            state.appUI.isPopupOpen = !state.appUI.isPopupOpen;
-            return {...state};
+            const bool2 = !state.appUI.isPopupOpen;
+            return {...state,
+                appUI: {...state.appUI, isPopupOpen: bool2}
+            };
         
         case USER_AUTH:
-            state.appUI.isAuthenticated = payload.bool;
-            state.user.userData = payload.userData;
-            return {...state};
+            return {...state,
+                    user: { ...state.user, userData: payload.userData },
+                    appUI: {...state.appUI, isAuthenticated: payload.bool }
+                };
 
         case POPUP_CREATE_ROOM:
-            state.appUI.popupType = payload.type;
-            return {...state};
+            return {...state,
+                appUI: {...state.appUI, popupType: payload.type }
+            };
         
         case POPULATE_ROOMS:
-        return {...state,
-            rooms: [...payload.rooms]
-        };
+            return {...state,
+                rooms: [...payload.rooms]
+            };
 
         case CREATE_ROOM:
             const {
@@ -98,19 +100,20 @@ const chatStore = (state=initialState, {type, payload}) => {
                 privated      : privated,
                 password      : password 
             };
-            state.rooms.push(obj);
-            return {...state};
+            
+            return {...state,
+                rooms: [...state.rooms, obj]
+            };
         
         case JOIN_ROOM:
-            console.log(payload.rid);
-
-            state.user.selectedRoom = payload.rid;
-
-            return {...state};
+            return {...state,
+                user: {...state.user, selectedRoom: payload.rid }
+            };
 
         case SCENE_CHANGE:
-            state.appUI.scene = payload.sceneType;
-            return {...state};
+            return {...state,
+                appUI: {...state.appUI, scene: payload.sceneType}
+            };
 
         default:
             return state;

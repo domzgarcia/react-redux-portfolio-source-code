@@ -11,12 +11,18 @@
         height: 30px;
     }
 }
+.-relative-content {
+    min-height: 100px;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+}
 .-custom-chat-width {
     max-width: 900px;
     width: 100%;
 }
 .chat-navigation {
-    padding: 15px;
+    padding: 10px;
     background: #eee;
     text-align: left;
 }
@@ -158,9 +164,9 @@
             max-width: 65%;
             width: 100%;
             border: 1px solid #eee;
-            padding:15px;
             
             .bodyOverflowY {
+                padding: 15px;
                 overflow-y: auto;
                 width: 100%;
                 height: 100%;
@@ -178,8 +184,6 @@
         }
 
         .inputPanelCont {
-            border: 1px solid #eee;
-            padding: 5px;
             display: flex;
             flex-direction: row;
 
@@ -304,4 +308,11 @@
 }
 .nominatePasswordInput.-active {
     display: inline-block;
+}
+
+.lbl-newConvi {
+    display: none;
+}
+.lbl-newConvi.-active {
+    display: block;
 }

@@ -16,6 +16,7 @@
   height: auto;
   padding: 0;
   color: white;
+  display: none;
 }
 
 .App-title {

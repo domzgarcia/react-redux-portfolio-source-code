@@ -12,7 +12,7 @@ class ChatHeaderContainer extends Component {
         let {isAuthenticated} = this.props;
         return (
             <div className="chat-navigation">
-                <h3 className="wgreet">Simple Chat</h3>
+                <h3 className="wgreet">Chat Prototype</h3>
                 {
                     isAuthenticated 
                     ?

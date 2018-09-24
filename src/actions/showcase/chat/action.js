@@ -5,9 +5,9 @@ import {
     CLOSE_OPEN_POPUP, 
     JOIN_ROOM, 
     POPULATE_ROOMS,
-    POPULATE_MESSAGES,
     EMPTY_PER_ROOM_MESSAGE,
-    ADD_MESSAGE
+    ADD_MESSAGE,
+    PULL_MESSAGE_CYCLE
 } from "Actions/showcase/chat/actionType.js";
 
 import _ from 'lodash';
@@ -157,18 +157,19 @@ export const joinRoom = (userInfo, callback=undefined) => {
             })
     }
 }
-/*
+
 export const fetchRoomData = (rid) => {
     return (dispatch) => {
+        dispatch({
+            type: PULL_MESSAGE_CYCLE
+        });
+
         const path = baseUrl.concat('fetchRoomData');
+
         axios.post(path, {rid})
-            .then((res) => {
-                console.log('FETCHED ROOM DATA', res);
+            .then((res) => { console.log(res);
                 dispatch({
-                    type: POPULATE_MESSAGES,
-                    payload: {
-                        messages: res.room.messages
-                    }
+                    type: PULL_MESSAGE_CYCLE
                 });
             })
             .catch((err) => {
@@ -176,7 +177,7 @@ export const fetchRoomData = (rid) => {
             });
     }
 }
-*/
+
 export const createMessage = (messageData) => {
     return (dispatch)  => {
         const path = baseUrl.concat('createMessage');
@@ -200,11 +201,19 @@ export const emptyMessagesByRoomId = (rid) => {
 };
 
 export const addMessage = (rid, messageData) => {
-    return {
-        type: ADD_MESSAGE,
-        payload: {
-            rid,
-            messageData
-        }
+    return (dispatch) => {
+        dispatch({
+            type: ADD_MESSAGE,
+            payload: {
+                rid,
+                messageData
+            }
+        });
     };
 };
+
+export const processMessageDefault = () => {
+    return {
+        type: PULL_MESSAGE_CYCLE
+    }
+}
