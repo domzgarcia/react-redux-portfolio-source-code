@@ -8,7 +8,9 @@ import { USER_AUTH,
     JOIN_ROOM, 
     EMPTY_PER_ROOM_MESSAGE,
     ADD_MESSAGE, 
-    PULL_MESSAGE_CYCLE} from "Actions/showcase/chat/actionType";
+    PULL_MESSAGE_CYCLE,
+    ADD_ROOM,
+    EMPTY_ROOM} from "Actions/showcase/chat/actionType";
 
 let initialState =  {
     appUI: {
@@ -30,20 +32,27 @@ let initialState =  {
 const chatStore = (state=initialState, {type, payload}) => {
     switch(type){
         case EMPTY_PER_ROOM_MESSAGE:
+            const emptyMessage = []
             return {...state, 
-                tempMessages: [] };
+                tempMessages: [...emptyMessage] };
+        
+        case EMPTY_ROOM:
+            const emptyRoom = [];
+                return {
+                    ...state,
+                    rooms: [...emptyRoom]
+                };
 
         case ADD_MESSAGE:
             // prevention in case
-            let allow = true;
+            let allowNewMessage = true;
             state.tempMessages.map((message, idx) => {
                 if(message.createdAt === payload.messageData.createdAt){
-                    allow = false;
+                    allowNewMessage = false;
                 }
             });
-
             return {...state,
-                tempMessages: (allow) 
+                tempMessages: (allowNewMessage) 
                 ? [...state.tempMessages, payload.messageData] 
                 : [...state.tempMessages]
             };
@@ -75,34 +84,20 @@ const chatStore = (state=initialState, {type, payload}) => {
             return {...state,
                 rooms: [...payload.rooms]
             };
-
-        case CREATE_ROOM:
-            const {
-                title, 
-                description, 
-                email, 
-                created_at, 
-                privated, 
-                password, 
-                rid,
-                name,
-                uid
-                } = payload.roomData;
-
-            const obj = {
-                uid           : uid,
-                rid           : rid,
-                created_at    : created_at,
-                email         : email,
-                name          : name,
-                title         : title,
-                description   : description,
-                privated      : privated,
-                password      : password 
-            };
-            
+        
+        case ADD_ROOM:
+            // prevention in case
+            let allowNewRoom = true;
+            let roomData = payload.roomData;
+            state.rooms.map((room, idx) => {
+                if(room.rid === roomData.rid){
+                    allowNewRoom = false;
+                }
+            });
             return {...state,
-                rooms: [...state.rooms, obj]
+                rooms: (allowNewRoom) 
+                        ? [...state.rooms, roomData]
+                        : [...state.rooms]
             };
         
         case JOIN_ROOM:

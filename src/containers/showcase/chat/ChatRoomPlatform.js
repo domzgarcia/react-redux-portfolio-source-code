@@ -5,8 +5,6 @@ import {createMessage,
     addMessage, 
     fetchRoomData} from 'Actions/showcase/chat/action.js';
 
-import firebase from 'firebase';
-
 import ChatRoomMessage from 'Containers/showcase/chat/ChatRoomMessage.js';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp'; 
 import chatAppFirebase from 'Services/chatAppFirebase';
@@ -24,19 +22,23 @@ class ChatRoomPlatform extends Component {
 
     componentDidMount(){
         const {rid} = this.props;
+        
         this.props.emptyMessagesByRoomId(rid);
+
         chatAppFirebase.onChildAdded(rid, this.handleAddedMessageSocket);
-        this.props.fetchRoomData();
+        
+        this.props.fetchRoomData(rid);
     }
 
     componentWillUnmount(){
         const {rid} = this.props;
-        chatAppFirebase.detached(rid, this.handleAddedMessageSocket);
+        chatAppFirebase.detachedAddMessages(rid, this.handleAddedMessageSocket);
     }
 
     handleSubmit(evt){
         evt.preventDefault();
         const {rid, userData} = this.props;
+        
         const messageData = {
             rid: rid,
             displayName: userData.displayName,
@@ -81,12 +83,13 @@ class ChatRoomPlatform extends Component {
         let room = rooms.filter((room) => {
             return room.rid === rid;
         })[0];
+        const roomReady = (room) ? true : false;
 
         return (
             <div className="chatplatform">  
                 <div className="chatHeaderPanel">
-                    <p className="chatName">{(room.title) ? room.title : 'Loading...'}</p>
-                    <p className="chatDesc">{(room.description) ? room.description : 'Loading...'}</p>
+                    <p className="chatName">{(roomReady) ? room.title : 'Loading...'}</p>
+                    <p className="chatDesc">{(roomReady) ? room.description : 'Loading...'}</p>
                 </div>
                 
                 <div className="messagesCont">
@@ -95,7 +98,9 @@ class ChatRoomPlatform extends Component {
 
                         <div className="bodyOverflowY -relative-content">
                             <ul id="messages">
+                            
                             <FlickrLoaderComp isLoading={messageCycle}/>
+
                             {   (!!tempMessages.length)
                                 ? tempMessages.map( (message, idx) => {
                                     return (<li key={idx}>

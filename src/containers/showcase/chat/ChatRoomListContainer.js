@@ -1,43 +1,71 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {joinRoom, changeScene} from 'Actions/showcase/chat/action.js';
+import {joinRoom, changeScene, addRoom, emptyRooms, emptyMessagesByRoomId} from 'Actions/showcase/chat/action.js';
 import {SCENE_CHATROOM} from 'Actions/showcase/chat/actionType';
+import chatAppFirebase from 'Services/chatAppFirebase';
+import FlickrLoaderComp from 'Components/FlickrLoaderComp';
 
 class ChatRoomListContainer extends Component {
     constructor(props){
         super(props);
         this.handleSelectRoom = this.handleSelectRoom.bind(this);
+        this.handleAddedRoomSocket = this.handleAddedRoomSocket.bind(this);
+    }
+
+    componentDidMount(){
+
+        this.props.emptyRooms();
+
+        chatAppFirebase.onPopulateRooms(this.handleAddedRoomSocket);
+    }
+    
+    componentWillUnmount(){
+        chatAppFirebase.detachedAddRooms(this.handleAddedRoomSocket);
+    }
+
+    handleAddedRoomSocket(snapshot){
+        const room = snapshot.val();
+        // alert(JSON.stringify(room, null, 2));
+        this.props.addRoom(room);
     }
 
     handleSelectRoom(roomId = 0){
         let {userData} = this.props;
 
+        this.props.emptyMessagesByRoomId(roomId);
+
         this.props.joinRoom(
             {rid: roomId, uid: userData.uid}, 
             () => {
-                this.props.changeScene(SCENE_CHATROOM);
+                this.props.changeScene(SCENE_CHATROOM);        
             });
+    }
+
+    renderRoom({title, description,name, idx, rid }){
+        return ( 
+            <li className="item" key={idx} onClick={()=>{
+                this.handleSelectRoom(rid);
+            }}>
+                <p className="name">{title}</p>
+                <p className="description">{description}</p>
+                <p className="createdBy">{name}</p>
+            </li>
+        )
     }
 
     render(){
         let {rooms} = this.props;
-        // console.log(this.props.debugState);
+        
         return (
             <div className="chatRoomCont">
-                <div className="roomsCont">
+                <div className="roomsCont -relative-content">
                 <p className="lbl-rooms"> Available Rooms:</p>
-                    <ul className="list">
-                        {rooms.map( (room, idx) => {
-                            return ( 
-                                <li className="item" key={idx} onClick={()=>{
-                                    this.handleSelectRoom(room.rid);
-                                }}>
-                                    <p className="name">{room.title}</p>
-                                    <p className="description">{room.description}</p>
-                                    <p className="createdBy">{room.name}</p>
-                                </li>
-                            )
-                        })}
+                    <ul className="list ">
+                        {(!!rooms.length)
+                        ? rooms.map( (room, idx) => {
+                            return this.renderRoom({...room, idx})
+                        })
+                        : <FlickrLoaderComp isLoading={true}/>}
                     </ul>
                 </div>
         </div>
@@ -55,7 +83,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     joinRoom: joinRoom,
-    changeScene: changeScene
+    changeScene: changeScene,
+    addRoom: addRoom,
+    emptyRooms: emptyRooms,
+    emptyMessagesByRoomId: emptyMessagesByRoomId
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomListContainer);

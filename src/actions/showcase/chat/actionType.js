@@ -7,8 +7,9 @@ export const SCENE_CHATROOM = "scene:chatroom";
 export const SCENE_CHANGE = "scene:change";
 
 export const JOIN_ROOM = "room:join-room";
-export const CREATE_ROOM = "room:create-room";
 export const POPULATE_ROOMS = "room:populate";
+export const ADD_ROOM = "room:add-to-local";
+export const EMPTY_ROOM = "room:empty";
 
 export const POPULATE_MESSAGES = 'message:populate';
 export const EMPTY_PER_ROOM_MESSAGE = 'message:empty';

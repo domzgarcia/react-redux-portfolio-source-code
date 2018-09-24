@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {createRoom, closeOpenPopup} from 'Actions/showcase/chat/action.js';
+import {addNewRoom, closeOpenPopup} from 'Actions/showcase/chat/action.js';
 
 class ChatCreateRoomContainer extends Component {
     constructor(props){
@@ -51,26 +51,25 @@ class ChatCreateRoomContainer extends Component {
             created_at: Date.now(),//moment().format('MMMM Do YYYY, h:mm:ss a'),
             privated: this.state.isPrivate,
             password: (this.state.isPrivate) ? this.state.password : 'default',
-            rid: 0,
+            rid: '-will-generate-rid-in-the-server-',
             messages: {}
         };
 
-        e.target.reset();
+        this.props.addNewRoom(roomData, 
+            
+        ()=> {
 
-        this.props.createRoom(roomData);
-        
-        this.setState({
-            roomTitle: '',
-            roomDescript: '',
-            userEmail: '',
-            displayName: '',
-            createdAt: 0,
-            isPrivate: false,
-        },
-        () => {
+            this.setState({
+                roomTitle: '',
+                roomDescript: '',
+                userEmail: '',
+                displayName: '',
+                createdAt: 0,
+                isPrivate: false,
+            });
+            
             this.props.closeOpenPopup();
-        }
-        );
+        });
     }
     handleChangeDescription(evt){
         this.setState({
@@ -126,7 +125,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    createRoom: createRoom,
+    addNewRoom: addNewRoom,
     closeOpenPopup: closeOpenPopup
 };
 

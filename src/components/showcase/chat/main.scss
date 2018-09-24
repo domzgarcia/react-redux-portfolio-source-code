@@ -180,6 +180,7 @@
                 margin: 0;
                 padding: 0;
                 list-style: none;
+
             }
         }
 
@@ -201,7 +202,9 @@
                 width: 100%;
                 display: block;
             }
-
+            form textarea {
+                resize: none;
+            }
             form .btnSend {
                 height: 50px;
                 max-width: 15%;

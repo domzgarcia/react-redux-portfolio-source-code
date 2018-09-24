@@ -1,13 +1,14 @@
 import { 
     USER_AUTH, 
-    SCENE_CHANGE, 
-    CREATE_ROOM, 
+    SCENE_CHANGE,
     CLOSE_OPEN_POPUP, 
     JOIN_ROOM, 
     POPULATE_ROOMS,
     EMPTY_PER_ROOM_MESSAGE,
     ADD_MESSAGE,
-    PULL_MESSAGE_CYCLE
+    PULL_MESSAGE_CYCLE,
+    ADD_ROOM,
+    EMPTY_ROOM
 } from "Actions/showcase/chat/actionType.js";
 
 import _ from 'lodash';
@@ -75,36 +76,16 @@ export const fetchRooms = () => {
     }
 }
 
-export const createRoom = (roomData) => {
+export const addNewRoom = (roomData, callback) => {
     return (dispatch) => {
         const path = baseUrl.concat('addRoom');
         axios.post(path, { roomData })
             .then( (res) => {
-                const url = res.data.result.toString().split('/');
-                const id  = url[url.length-1];
-                roomData.rid = id;
-
-                let delay = setTimeout(() => {
-                    clearTimeout(delay);
-                    const path = baseUrl.concat('storeRoomId');
-                    axios.post(path, {rid: id})
-                        .then( (res) => {
-                            // sync RID to newly added data in firebase
-                            dispatch({
-                                type: CREATE_ROOM,
-                                payload: {
-                                    roomData
-                                }
-                            });
-                        })
-                        .catch( (err) => {
-                            if(err) return new Error('Error in Store Room Id');
-                        });
-
-                }, 100);
+                // ... remove storeRoomId
+                callback();
             })
             .catch((err) => {
-                if(err) return new Error('Error in Add Room');
+                if(err) throw new Error('Error in Add Room');
             });
     }
 }
@@ -117,7 +98,7 @@ export const addNewUser = (userData) => {
                 // nothing to do here...
             })
             .catch((err) => {
-                if(err) return new Error('Error in Add User');
+                if(err) throw new Error('Error in Add User');
             }); 
     }
 }
@@ -136,44 +117,45 @@ export const changeScene = (sceneType, data={}) => {
 
 export const joinRoom = (userInfo, callback=undefined) => {
     return (dispatch) => {
-        const path = baseUrl.concat('joinRoom');
-        // console.log('SELECTED:', userInfo);
         const rid = userInfo.rid;
+
+        dispatch({
+            type: JOIN_ROOM,
+            payload: {
+                rid
+            }
+        });
+
+        const path = baseUrl.concat('joinRoom');
+
         axios.post(path, { userInfo })
             .then((res) => {
                 // ...
-                console.log('joined room', res, rid);
-                dispatch({
-                    type: JOIN_ROOM,
-                    payload: {
-                        rid
-                    }
-                });
-                // wait state change before passing to scene : chatroom
-                const delay = setTimeout(()=>{ clearTimeout(delay); callback(); },100);
+                callback();
             })
             .catch((err)=>{
-                if(err) return new Error('Error in join Room');
+                if(err) throw new Error('Error in join Room');
             })
     }
 }
 
-export const fetchRoomData = (rid) => {
+export const fetchRoomData = (rid, callback=undefined) => {
     return (dispatch) => {
         dispatch({
             type: PULL_MESSAGE_CYCLE
         });
-
+        
         const path = baseUrl.concat('fetchRoomData');
 
         axios.post(path, {rid})
-            .then((res) => { console.log(res);
+            .then((res) => { 
+                // console.log(res);
                 dispatch({
                     type: PULL_MESSAGE_CYCLE
                 });
             })
             .catch((err) => {
-                if(err) return new Error('Error in fetching room data');
+                if(err) throw new Error('Error in fetching room data');
             });
     }
 }
@@ -186,7 +168,7 @@ export const createMessage = (messageData) => {
                 console.log('Success create message', res);
             })
             .catch((err) => {
-                if(err) return new Error('Error in create Message.');
+                if(err) throw new Error('Error in create Message.');
             });
     }
 }
@@ -197,6 +179,12 @@ export const emptyMessagesByRoomId = (rid) => {
         payload: {
             rid
         }
+    }
+};
+
+export const emptyRooms = () => {
+    return {
+        type: EMPTY_ROOM
     }
 };
 
@@ -211,6 +199,15 @@ export const addMessage = (rid, messageData) => {
         });
     };
 };
+
+export const addRoom = (roomData) => {
+    return {
+        type: ADD_ROOM,
+        payload: {
+            roomData
+        }
+    }
+}
 
 export const processMessageDefault = () => {
     return {

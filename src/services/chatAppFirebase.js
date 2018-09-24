@@ -23,6 +23,10 @@ let chatAppFirebase = {
         chatAppFirebase.app.database().ref(`/rooms/${rid}/messages`)
         .on('child_added', callback);
     },
+    onPopulateRooms(callback){
+        chatAppFirebase.app.database().ref(`/rooms`)
+        .on('child_added', callback);
+    },
     // Promise<any>
     signInWithPopup(){
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -32,8 +36,12 @@ let chatAppFirebase = {
     signOut(){
         return chatAppFirebase.app.auth().signOut();
     },
-    detached(rid, callback){
+    detachedAddMessages(rid, callback){
         chatAppFirebase.app.database().ref(`/rooms/${rid}/messages`)
+        .off('child_added', callback);
+    },
+    detachedAddRooms(callback){
+        chatAppFirebase.app.database().ref(`/rooms`)
         .off('child_added', callback);
     }
 }
