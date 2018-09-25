@@ -5,6 +5,8 @@ import ChatRoomPlatform from 'Containers/showcase/chat/ChatRoomPlatform.js';
 import DynamicPopUpContainer from 'Containers/DynamicPopUpContainer.js';
 import { POPUP_CREATE_ROOM, SCENE_CHATROOM, SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType.js';
 import { setPopUpType, closeOpenPopup, changeScene } from 'Actions/showcase/chat/action.js';
+import ChatRoomListSkeletonComp from 'Components/showcase/chat/ChatRoomListSkeletonComp.js';
+
 
 class ChatRoomContainer extends Component {
     constructor(props){

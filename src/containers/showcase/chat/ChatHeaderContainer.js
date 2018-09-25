@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {signInGoogle, changeScene} from 'Actions/showcase/chat/action.js';
+import {manageGoogleUser, changeScene} from 'Actions/showcase/chat/action.js';
 import { SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType';
 import chatAppFirebase from 'Services/chatAppFirebase';
 
@@ -22,7 +22,7 @@ class ChatHeaderContainer extends Component {
 
                         chatAppFirebase.signOut()
                         .then((resp) => {
-                            this.props.signInGoogle();
+                            this.props.manageGoogleUser();
                         })
                         .catch((resp) => {
                             if(resp.error){
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    signInGoogle: signInGoogle,
+    manageGoogleUser: manageGoogleUser,
     changeScene: changeScene
 };
 

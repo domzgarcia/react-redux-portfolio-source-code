@@ -4,6 +4,7 @@ import {joinRoom, changeScene, addRoom, emptyRooms, emptyMessagesByRoomId} from 
 import {SCENE_CHATROOM} from 'Actions/showcase/chat/actionType';
 import chatAppFirebase from 'Services/chatAppFirebase';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp';
+import ChatRoomListSkeletonComp from '../../../components/showcase/chat/ChatRoomListSkeletonComp';
 
 class ChatRoomListContainer extends Component {
     constructor(props){
@@ -66,7 +67,7 @@ class ChatRoomListContainer extends Component {
                         ? rooms.map( (room, idx) => {
                             return this.renderRoom({...room, idx})
                         })
-                        : <FlickrLoaderComp isLoading={true}/>}
+                        : <ChatRoomListSkeletonComp len={3} /> } 
                     </ul>
                 </div>
         </div>

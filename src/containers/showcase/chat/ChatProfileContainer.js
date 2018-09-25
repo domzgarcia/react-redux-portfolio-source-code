@@ -18,9 +18,7 @@ class ChatProfileContainer extends Component {
     handlerSignInGoogle(){
         chatAppFirebase.signInWithPopup()
             .then( (resp) => {
-                console.log('respuser', resp.user);
                 let {user} = resp;
-
                 if(!user) return;
 
                 const userData = {
@@ -29,11 +27,10 @@ class ChatProfileContainer extends Component {
                     photoURL: user.photoURL,
                     uid: user.uid,
                 };
-
                 this.props.addNewUser(userData);
             })
             .catch((e) => {
-                alert('sign in disconnected \n' + JSON.stringify(e));
+                alert('sign in disconnected \n' + JSON.stringify(e), null, 2);
             });
     }
     render(){

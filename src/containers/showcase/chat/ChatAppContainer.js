@@ -5,7 +5,7 @@ import ChatProfileContainer from 'Containers/showcase/chat/ChatProfileContainer.
 import ChatHeaderContainer from 'Containers/showcase/chat/ChatHeaderContainer.js';
 import ChatRoomContainer from 'Containers/showcase/chat/ChatRoomContainer.js';
 
-import {signInGoogle} from 'Actions/showcase/chat/action.js';
+import {manageGoogleUser} from 'Actions/showcase/chat/action.js';
 import chatAppFirebase from 'Services/chatAppFirebase.js';
 
 class ChatAppContainer extends Component {
@@ -24,17 +24,16 @@ class ChatAppContainer extends Component {
     }
 
     handlerAuthStateChanged(user){
-        console.log('CHANGE_MAKE_UPDATE_TO_USER');
         const bool = (user) ? true : false;
         if( ! user) return; 
-        console.log(user);
+
         const userData = {
             displayName: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
             uid: user.uid,
         };
-        this.props.signInGoogle(bool, userData);
+        this.props.manageGoogleUser(bool, userData);
     }
 
     render(){
@@ -43,7 +42,7 @@ class ChatAppContainer extends Component {
             <div className="container app-sample -custom-chat-width">
                 <ChatHeaderContainer />
                 { 
-                    isAuthenticated 
+                    (isAuthenticated)
                     ?  <ChatRoomContainer />
                     :  <ChatProfileContainer />
                 }
@@ -57,7 +56,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    signInGoogle: signInGoogle
+    manageGoogleUser: manageGoogleUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatAppContainer);

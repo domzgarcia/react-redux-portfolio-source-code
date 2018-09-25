@@ -19,7 +19,7 @@ import axios from 'axios';
 // const baseUrl = 'https://domz-garcia.tk';
 const baseUrl = 'https://myspace-a310c.firebaseapp.com/';
 
-export const signInGoogle = (bool = false, userData = {}) => {
+export const manageGoogleUser = (bool = false, userData = {}) => {
     return (dispatch) => {
         dispatch({
             type: USER_AUTH,

@@ -124,6 +124,10 @@
             padding: 10px 20px;
             margin-bottom: 3px;
 
+            &:active {
+                background-color: #eee;
+            }
+
             > p {
                 margin: 2px;
                 white-space: nowrap; 
