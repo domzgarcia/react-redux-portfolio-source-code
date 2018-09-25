@@ -58,9 +58,10 @@ class ChatRoomListContainer extends Component {
         
         return (
             <div className="chatRoomCont">
-                <div className="roomsCont -relative-content">
+                <div className="roomsCont">
                 <p className="lbl-rooms"> Available Rooms:</p>
-                    <ul className="list ">
+                    <ul className="list -relative-content">
+
                         {(!!rooms.length)
                         ? rooms.map( (room, idx) => {
                             return this.renderRoom({...room, idx})
