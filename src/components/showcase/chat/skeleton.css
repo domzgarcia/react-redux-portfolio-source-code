@@ -1,6 +1,9 @@
 .skeleton-parent-cont {
-    display: flex;
+    display: none;
     flex-flow: row wrap; 
+}
+.skeleton-parent-cont.-active {
+    display: flex;
 }
 
 .fluid-layout {

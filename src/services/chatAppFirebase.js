@@ -7,6 +7,7 @@ let chatAppFirebase = {
     length() {
         return firebase.apps.length;
     },
+
     initialize() {
         chatAppFirebase.app = firebase.initializeApp({
             apiKey: 'AIzaSyDFlY0a3c8dACo3t-nVL9g5VI631oFpdx8',
@@ -16,32 +17,49 @@ let chatAppFirebase = {
             projectId: 'myspace-a310c',
         });
     },
+
     onChange(callback){
         chatAppFirebase.app.auth().onAuthStateChanged(callback);
     },
+    
     onChildAdded(rid, callback){
         chatAppFirebase.app.database().ref(`/rooms/${rid}/messages`)
         .on('child_added', callback);
     },
+
+    onSetConnectedClient(callback){
+        chatAppFirebase.app.database().ref(`/connections`)
+        .on('child_added', callback);
+    },
+
     onPopulateRooms(callback){
         chatAppFirebase.app.database().ref(`/rooms`)
         .on('child_added', callback);
     },
+
     // Promise<any>
     signInWithPopup(){
         const provider = new firebase.auth.GoogleAuthProvider();
         return chatAppFirebase.app.auth().signInWithPopup(provider);
     },
+
     // Promise<any>
     signOut(){
         return chatAppFirebase.app.auth().signOut();
     },
+
     detachedAddMessages(rid, callback){
         chatAppFirebase.app.database().ref(`/rooms/${rid}/messages`)
         .off('child_added', callback);
     },
+
     detachedAddRooms(callback){
         chatAppFirebase.app.database().ref(`/rooms`)
+        .off('child_added', callback);
+    },
+    
+    detachedAddConnectedClient(callback){
+        chatAppFirebase.app.database().ref(`/connections`)
         .off('child_added', callback);
     }
 }

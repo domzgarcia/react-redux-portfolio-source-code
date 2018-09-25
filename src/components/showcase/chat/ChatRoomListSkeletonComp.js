@@ -5,11 +5,12 @@ import './skeleton.css';
 const ChatRoomListSkeletonComp = (props) => {
 
     function _splitDivs(loadersNum){
-       let markupStart = `<div class="skeleton-parent-cont">`;
+       const isActive  = (props.isLoading) ? '-active' : '';
+       let markupStart = `<div class="skeleton-parent-cont ${isActive}">`;
        let markupEnd   = `</div>`;
 
        for(var i=0; i < loadersNum; i++){
-
+        
         markupStart += `<div class="columnDiv"></div>`;
         
         if(i === loadersNum-1){

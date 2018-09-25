@@ -47,39 +47,49 @@ class TodoAppContainer extends Component {
         let {isFormOpen, toggleCard, isFormLoading} = this.props;
         
         return (
-            <div className="container -top-bottom-gutter align-left">
-                
-                <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
-                <div className="clearfix"></div>
-                <div className="app-sample">
-                    <div className="top-nav">
-                        <button className="btn-add" onClick={toggleCard}>{ (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
+            <div>
+            
+                <div className="container -top-bottom-gutter align-left">
+                    
+                    <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
+                    <div className="clearfix"></div>
+                    <div className="app-sample">
+                        <div className="top-nav">
+                            <button className="btn-add" onClick={toggleCard}>{ (isFormOpen ? 'Hide Form' : 'Show Form') }</button>
+                        </div>
+                        {/* Navigation */}
+                        <TodoFormComp 
+                            isOpen={isFormOpen} 
+                            onSubmit={this.handleSubmit} 
+                            handleChange={this.handleChange}
+                            isFormLoading={isFormLoading}
+                        />
+
+                        {/* List */}
+                        <TodoListContainer />
+
+                        {/* Filter */}
+                        <TodoFilterContainer />
                     </div>
-                    {/* Navigation */}
-                    <TodoFormComp 
-                        isOpen={isFormOpen} 
-                        onSubmit={this.handleSubmit} 
-                        handleChange={this.handleChange}
-                        isFormLoading={isFormLoading}
-                    />
-
-                    {/* List */}
-                    <TodoListContainer />
-
-                    {/* Filter */}
-                    <TodoFilterContainer />
                 </div>
 
-                <br />
-                <br />
+                <div className="container">
+                    <div className="inject-project-details">
+                        <p className="title"><strong>Project description:</strong></p>
+                        <div className="body">
+                            <p> Simple todo app done in React-Redux, my first handson pet project with these libraries. 
+                                Basic CRUD functionality with basic integration to firebase RESTful API.
+                                <br />
+                                <br />
+                                <a href="javascript:void(0);" className="-dullbadge">#react</a>
+                                <a href="javascript:void(0);" className="-dullbadge">#redux</a>
+                                <a href="javascript:void(0);" className="-dullbadge">#firebase</a>
+                                <a href="javascript:void(0);" className="-dullbadge">#restAPI</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-                <p><strong>Project description:</strong></p>
-                <p>Simple todo app with firebase integration(simple REST API). Has a usual functionality such as C.R.U.D
-                    to explore passing of events from one component to another.
-                </p>
-
-                <br />
-                <br />
             </div>
         )
     }

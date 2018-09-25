@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {joinRoom, changeScene, addRoom, emptyRooms, emptyMessagesByRoomId} from 'Actions/showcase/chat/action.js';
+import {joinRoom, getServerTime, changeScene, addRoom, emptyRooms, emptyMessagesByRoomId,fetchRooms} from 'Actions/showcase/chat/action.js';
 import {SCENE_CHATROOM} from 'Actions/showcase/chat/actionType';
 import chatAppFirebase from 'Services/chatAppFirebase';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp';
@@ -17,6 +17,8 @@ class ChatRoomListContainer extends Component {
 
         this.props.emptyRooms();
 
+        this.props.fetchRooms();
+
         chatAppFirebase.onPopulateRooms(this.handleAddedRoomSocket);
     }
     
@@ -32,14 +34,14 @@ class ChatRoomListContainer extends Component {
 
     handleSelectRoom(roomId = 0){
         let {userData} = this.props;
-
         this.props.emptyMessagesByRoomId(roomId);
 
         this.props.joinRoom(
-            {rid: roomId, uid: userData.uid}, 
+            {...userData, rid: roomId}, 
             () => {
                 this.props.changeScene(SCENE_CHATROOM);        
             });
+        this.props.getServerTime();
     }
 
     renderRoom({title, description,name, idx, rid }){
@@ -55,19 +57,19 @@ class ChatRoomListContainer extends Component {
     }
 
     render(){
-        let {rooms} = this.props;
+        let {rooms, roomCycle} = this.props;
         
         return (
             <div className="chatRoomCont">
                 <div className="roomsCont">
                 <p className="lbl-rooms"> Available Rooms:</p>
                     <ul className="list -relative-content">
-
+                        
                         {(!!rooms.length)
                         ? rooms.map( (room, idx) => {
                             return this.renderRoom({...room, idx})
                         })
-                        : <ChatRoomListSkeletonComp len={3} /> } 
+                        : <ChatRoomListSkeletonComp len={3} isLoading={roomCycle}/> } 
                     </ul>
                 </div>
         </div>
@@ -80,7 +82,8 @@ class ChatRoomListContainer extends Component {
 const mapStateToProps = (state) => ({
     debugState: state,
     rooms: state.chatStore.rooms,
-    userData: state.chatStore.user.userData
+    userData: state.chatStore.user.userData,
+    roomCycle: state.chatStore.appUI.roomCycle
 });
 
 const mapDispatchToProps = {
@@ -88,7 +91,9 @@ const mapDispatchToProps = {
     changeScene: changeScene,
     addRoom: addRoom,
     emptyRooms: emptyRooms,
-    emptyMessagesByRoomId: emptyMessagesByRoomId
+    emptyMessagesByRoomId: emptyMessagesByRoomId,
+    fetchRooms: fetchRooms,
+    getServerTime: getServerTime
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomListContainer);

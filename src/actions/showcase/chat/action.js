@@ -2,13 +2,19 @@ import {
     USER_AUTH, 
     SCENE_CHANGE,
     CLOSE_OPEN_POPUP, 
-    JOIN_ROOM, 
+    UPDATE_ROOM_ID, 
     POPULATE_ROOMS,
     EMPTY_PER_ROOM_MESSAGE,
     ADD_MESSAGE,
     PULL_MESSAGE_CYCLE,
     ADD_ROOM,
-    EMPTY_ROOM
+    EMPTY_ROOM,
+    PULL_ROOM_CYCLE,
+    EMPTY_USER_CONNECTIONS,
+    ADD_USER_CONNECTED,
+    SET_SERVER_TIME,
+    ADD_VISITOR_COUNT,
+    EMPTY_VISITOR_COUNT
 } from "Actions/showcase/chat/actionType.js";
 
 import _ from 'lodash';
@@ -46,12 +52,29 @@ export const setPopUpType = (type) => {
     }
 }
 
+export const pullRoomCycle = () => {
+    return {
+        type: PULL_ROOM_CYCLE
+    }
+}
+
 export const fetchRooms = () => {
+    
     return (dispatch) => {
         const path = baseUrl.concat('fetchRooms');
-
+        
+        dispatch(pullRoomCycle());
+        
         axios.get(path)
             .then((resp) =>{
+                
+                dispatch(pullRoomCycle());
+
+                return false;
+                /**
+                 * Not use for firebase invoke explicit function and spread to all 
+                 * connected clients.
+                 */
                 let objectsToArrayObjects = [];
                 if(_.values(resp.data.rooms).some(x => x !== undefined) ){
                     objectsToArrayObjects = Object.keys(resp.data.rooms).map(function(key) {
@@ -60,9 +83,7 @@ export const fetchRooms = () => {
                         return resp.data.rooms[key];
                     });
                 }
-
-                console.log('SSSS', objectsToArrayObjects);
-
+                // Not use
                 dispatch({
                     type: POPULATE_ROOMS,
                     payload: {
@@ -115,20 +136,40 @@ export const changeScene = (sceneType, data={}) => {
     }
 }
 
+export const getServerTime = () => {
+    return (dispatch) => {
+        
+        const path = baseUrl.concat('getServerTime');
+        axios.get(path)
+            .then((res)=>{
+                // console.log('SERVER_TIME', res);
+                dispatch({
+                    type: SET_SERVER_TIME,
+                    payload: {
+                        serverTime: res.data.serverTime
+                    }
+                });
+            })
+            .catch((err)=>{
+                if(err) throw new Error('Error in getting server time');
+            });
+    }
+}
+
 export const joinRoom = (userInfo, callback=undefined) => {
     return (dispatch) => {
-        const rid = userInfo.rid;
+        const {rid} = userInfo;
 
+        // Update selected room 
         dispatch({
-            type: JOIN_ROOM,
+            type: UPDATE_ROOM_ID,
             payload: {
                 rid
             }
         });
 
         const path = baseUrl.concat('joinRoom');
-
-        axios.post(path, { userInfo })
+        axios.post(path, {userInfo})
             .then((res) => {
                 // ...
                 callback();
@@ -149,7 +190,6 @@ export const fetchRoomData = (rid, callback=undefined) => {
 
         axios.post(path, {rid})
             .then((res) => { 
-                // console.log(res);
                 dispatch({
                     type: PULL_MESSAGE_CYCLE
                 });
@@ -212,5 +252,26 @@ export const addRoom = (roomData) => {
 export const processMessageDefault = () => {
     return {
         type: PULL_MESSAGE_CYCLE
+    }
+}
+
+export const emptyUserConnections = () => {
+    return {
+        type: EMPTY_USER_CONNECTIONS
+    }
+}
+
+export const addUserClient = (userData) => {
+    return {
+        type: ADD_USER_CONNECTED,
+        payload: {
+            userData
+        }
+    }
+}
+
+export const emptyVisitorCount = () => {
+    return {
+        type: EMPTY_VISITOR_COUNT,
     }
 }

@@ -232,6 +232,8 @@
             .visitors {
                 padding: 0 15px;
                 list-style: none;
+                overflow-y: auto;
+                height: 290px;
 
                 .visitorDisplay {
                     padding: 10px 0;

@@ -18,10 +18,6 @@ class ShowcaseContainer extends Component {
     render(){
         return (
             <div className="container -top-bottom-gutter"> 
-
-                <div className="cont-sass">
-                    <span>With Sass preprocessor</span>
-                </div>
                 
                 <h1 className="page-title">Showcase Projects</h1>
 

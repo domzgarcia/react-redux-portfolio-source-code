@@ -39,7 +39,6 @@ class ChatCreateRoomContainer extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-
         if(!this.state.roomTitle.length || !this.state.roomDescript.length) return;
         
         const roomData = {
@@ -56,7 +55,6 @@ class ChatCreateRoomContainer extends Component {
         };
 
         this.props.addNewRoom(roomData, 
-            
         ()=> {
 
             this.setState({
@@ -99,15 +97,15 @@ class ChatCreateRoomContainer extends Component {
                 <form className="custom-form" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label className="form-lbl">Room name:</label>
-                        <input type="text" onChange={this.handleChangeRoomTitle}/>
+                        <input type="text" value={this.state.roomTitle} onChange={this.handleChangeRoomTitle}/>
                     </div>
                     <div className="form-group">
                         <label className="form-lbl">Description:</label>
-                        <input type="text" onChange={this.handleChangeDescription}/>
+                        <input type="text" value={this.state.roomDescript} onChange={this.handleChangeDescription}/>
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label className="form-lbl"> <input type="checkbox" checked={this.state.isPrivate} onClick={this.handleAutoJoin}/> Nominate Password</label>
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <input type="text" onChange={this.handlePassword} className={"nominatePasswordInput "+passwordVisibility}/>
                     </div>

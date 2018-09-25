@@ -5,12 +5,18 @@ import { USER_AUTH,
     SCENE_ROOMS_LIST, 
     POPULATE_ROOMS, 
     SCENE_CHANGE, 
-    JOIN_ROOM, 
+    UPDATE_ROOM_ID, 
     EMPTY_PER_ROOM_MESSAGE,
     ADD_MESSAGE, 
     PULL_MESSAGE_CYCLE,
     ADD_ROOM,
-    EMPTY_ROOM} from "Actions/showcase/chat/actionType";
+    EMPTY_ROOM,
+    PULL_ROOM_CYCLE,
+    SET_SERVER_TIME,
+    EMPTY_USER_CONNECTIONS,
+    ADD_USER_CONNECTED,
+    ADD_VISITOR_COUNT,
+    EMPTY_VISITOR_COUNT} from "Actions/showcase/chat/actionType";
 
 let initialState =  {
     appUI: {
@@ -19,14 +25,24 @@ let initialState =  {
         isPopupOpen: false,
         scene: SCENE_ROOMS_LIST,
         isMessageOnProcess: false,
-        messageCycle: false
+        messageCycle: false,
+        roomCycle: false
     },
     user: {
         userData: null,
         selectedRoom: 'not-set',
     },
     tempMessages: [],
+
     rooms: [],
+
+    emptyUserConnections: [],
+
+    userConnections: [],
+
+    serverTime: 0,
+
+    visitorCount: 0,
 }
 
 const chatStore = (state=initialState, {type, payload}) => {
@@ -100,7 +116,7 @@ const chatStore = (state=initialState, {type, payload}) => {
                         : [...state.rooms]
             };
         
-        case JOIN_ROOM:
+        case UPDATE_ROOM_ID:
             return {...state,
                 user: {...state.user, selectedRoom: payload.rid }
             };
@@ -109,6 +125,58 @@ const chatStore = (state=initialState, {type, payload}) => {
             return {...state,
                 appUI: {...state.appUI, scene: payload.sceneType}
             };
+
+        case PULL_ROOM_CYCLE:
+            return {
+                ...state,
+                appUI: {
+                    ...state.appUI, roomCycle: !state.appUI.roomCycle}
+            };
+
+        case SET_SERVER_TIME: 
+            return {
+                ...state,
+                serverTime: payload.serverTime
+            };
+        
+        case EMPTY_USER_CONNECTIONS:
+            const emptyUserConnections = [];
+            return {
+                ...state,
+                userConnections: [...emptyUserConnections]
+            };
+
+        case ADD_USER_CONNECTED:
+            const userData = payload.userData;
+            let allowSaveUser = true;
+            let count = state.visitorCount;
+
+            if(state.user.selectedRoom !== userData.rid){
+                return {...state};    
+            }
+            count += 1;
+            // console.log(state.user.selectedRoom,'===',userData.rid, count);
+            state.userConnections.map((user, idx) => {
+                if(user.uid === userData.uid){
+                    allowSaveUser = false;
+            // console.log('FFFF', idx, state.user.selectedRoom, user.rid );
+                }
+            });
+
+            return {
+                ...state,
+                visitorCount: count,
+                userConnections: (allowSaveUser)
+                ? [...state.userConnections, userData]
+                : [...state.userConnections]
+            };
+        
+        case EMPTY_VISITOR_COUNT:
+            let zero = 0;
+            return {
+                ...state,
+                visitorCount: zero
+            }
 
         default:
             return state;

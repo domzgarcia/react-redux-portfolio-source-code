@@ -3,11 +3,18 @@ import {connect} from 'react-redux';
 import {createMessage,
     emptyMessagesByRoomId, 
     addMessage, 
-    fetchRoomData} from 'Actions/showcase/chat/action.js';
+    fetchRoomData,
+    emptyUserConnections,
+    addUserClient,
+    emptyVisitorCount,
+    getServerTime
+} from 'Actions/showcase/chat/action.js';
 
 import ChatRoomMessage from 'Containers/showcase/chat/ChatRoomMessage.js';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp'; 
 import chatAppFirebase from 'Services/chatAppFirebase';
+import moment from 'moment';
+import _ from 'lodash';
 
 class ChatRoomPlatform extends Component {
     constructor(props){
@@ -15,6 +22,7 @@ class ChatRoomPlatform extends Component {
         this.handleSubmit             = this.handleSubmit.bind(this);
         this.handleChange             = this.handleChange.bind(this);
         this.handleAddedMessageSocket = this.handleAddedMessageSocket.bind(this);
+        this.handleAddedUserSocket    = this.handleAddedUserSocket.bind(this);
         this.state = {
             text: ''
         };
@@ -25,14 +33,22 @@ class ChatRoomPlatform extends Component {
         
         this.props.emptyMessagesByRoomId(rid);
 
+        this.props.emptyUserConnections();
+
+        this.props.emptyVisitorCount();
+
         chatAppFirebase.onChildAdded(rid, this.handleAddedMessageSocket);
+
+        chatAppFirebase.onSetConnectedClient(this.handleAddedUserSocket);
         
         this.props.fetchRoomData(rid);
+
     }
 
     componentWillUnmount(){
         const {rid} = this.props;
         chatAppFirebase.detachedAddMessages(rid, this.handleAddedMessageSocket);
+        chatAppFirebase.detachedAddConnectedClient(this.detachedAddConnectedClient);
     }
 
     handleSubmit(evt){
@@ -78,8 +94,25 @@ class ChatRoomPlatform extends Component {
         },14);
     }
 
+    handleAddedUserSocket(snapshot){
+        const userData = snapshot.val();
+
+        this.props.addUserClient(userData);
+
+        _.throttle( () => {
+            this.props.getServerTime();
+        }, 1000, { 'trailing' : false });
+    }
+
+    computeServerTime(userTime, serverTime){
+        var dateA = moment(userTime);
+        var dateB = moment(serverTime);
+        return dateB.from(dateA);
+    }
+
     render(){
-        let {rooms, rid, tempMessages, messageCycle} = this.props;
+        let {rooms, rid, tempMessages, messageCycle, 
+            userConnections, serverTime, visitorCount } = this.props;
         let room = rooms.filter((room) => {
             return room.rid === rid;
         })[0];
@@ -131,28 +164,28 @@ class ChatRoomPlatform extends Component {
                     {/* Visitor Panel */}
                     <div className="visitorsCont">
                         <div className="header">
-                            <p>Visitors (3)</p>
+                            <p>Visitors ({visitorCount})</p>
                         </div>
-                        <div className="searchComp">
+                        
+                        {/* <div className="searchComp">
                             <p className="lblSearch">Search User:</p>
                             <input type="text"/>
-                        </div>
+                        </div> */}
+
                         <ul className="visitors">
-                            <li>
-                                <div className="visitorDisplay">
-                                    <p className="name">Domz Garcia</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="visitorDisplay">
-                                    <p className="name">Christina Joy</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="visitorDisplay">
-                                    <p className="name">Moderator 101</p>
-                                </div>
-                            </li>
+                           {userConnections.map( (user, idx) => {
+                                return (
+                                    <li key={idx}>
+                                        <div className="visitorDisplay">
+                                            <div className="name">
+                                                <div>{user.displayName}</div>
+                                                <div>
+                                                    <small>{this.computeServerTime(user.createdAt, serverTime)}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>)
+                            })}
                         </ul>
                     </div>
 
@@ -168,6 +201,9 @@ const mapStateToProps = (state) => ({
     userData: state.chatStore.user.userData,
     rooms: state.chatStore.rooms,
     messageCycle: state.chatStore.appUI.messageCycle,
+    userConnections: state.chatStore.userConnections,
+    serverTime: state.chatStore.serverTime,
+    visitorCount: state.chatStore.visitorCount
 });
 
 
@@ -175,7 +211,11 @@ const mapDispatchToProps = {
     emptyMessagesByRoomId   : emptyMessagesByRoomId,
     createMessage           : createMessage,
     addMessage              : addMessage,
-    fetchRoomData           : fetchRoomData
+    fetchRoomData           : fetchRoomData,
+    emptyUserConnections    : emptyUserConnections,
+    addUserClient           : addUserClient,
+    emptyVisitorCount      : emptyVisitorCount,
+    getServerTime           : getServerTime
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomPlatform);
