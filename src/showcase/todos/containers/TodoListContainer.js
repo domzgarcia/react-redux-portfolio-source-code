@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import 'Components/showcase/todos/main.css';
+import '../components/main.css';
 import TodoListItemContainer from './TodoListItemContainer';
-import {TODO_FILTER_PENDING, TODO_FILTER_DONE} from 'Actions/showcase/todos/actionType.js';
+import {TODO_FILTER_PENDING, TODO_FILTER_DONE} from '../actions/actionType';
 
 class TodoListContainer extends Component {
     constructor(props){

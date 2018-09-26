@@ -3,11 +3,7 @@ import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
 import rootReducer from 'Reducers/index.js';
-// import v4 from 'uuid/v4';
-
-import { TODO_FILTER_ALL } from 'Actions/showcase/todos/actionType.js';
-import firebase from 'Services/firebase.js';
-import { SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType';
+import { TODO_FILTER_ALL } from './showcase/todos/actions/actionType';
 
 export const history = createHistory();
 

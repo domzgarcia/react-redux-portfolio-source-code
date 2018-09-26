@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ChatRoomListContainer from 'Containers/showcase/chat/ChatRoomListContainer.js';
-import ChatRoomPlatform from 'Containers/showcase/chat/ChatRoomPlatform.js';
+import ChatRoomListContainer from './ChatRoomListContainer';
+import ChatRoomPlatform from './ChatRoomPlatform';
 import DynamicPopUpContainer from 'Containers/DynamicPopUpContainer.js';
-import { POPUP_CREATE_ROOM, SCENE_CHATROOM, SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType.js';
-import { setPopUpType, closeOpenPopup, changeScene } from 'Actions/showcase/chat/action.js';
-import ChatRoomListSkeletonComp from 'Components/showcase/chat/ChatRoomListSkeletonComp.js';
+import { POPUP_CREATE_ROOM, SCENE_CHATROOM, SCENE_ROOMS_LIST } from '../actions/actionType';
+import { setPopUpType, closeOpenPopup, changeScene } from '../actions/action';
+import ChatRoomListSkeletonComp from '../components/ChatRoomListSkeletonComp';
 
 
 class ChatRoomContainer extends Component {

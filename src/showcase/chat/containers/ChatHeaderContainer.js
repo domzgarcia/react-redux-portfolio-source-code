@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {manageGoogleUser, changeScene} from 'Actions/showcase/chat/action.js';
-import { SCENE_ROOMS_LIST } from 'Actions/showcase/chat/actionType';
-import chatAppFirebase from 'Services/chatAppFirebase';
+import {manageGoogleUser, changeScene} from '../actions/action';
+import { SCENE_ROOMS_LIST } from '../actions/actionType';
+import chatAppFirebase from '../services/chatAppFirebase';
 
 class ChatHeaderContainer extends Component {
     constructor(props){

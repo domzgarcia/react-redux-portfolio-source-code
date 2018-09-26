@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import 'Components/showcase/chat/main.scss';
-import chatAppFirebase from 'Services/chatAppFirebase.js';
-import {addNewUser} from 'Actions/showcase/chat/action.js';
+import '../components/main.scss';
+import chatAppFirebase from '../services/chatAppFirebase';
+import {addNewUser} from '../actions/action';
 
 class ChatProfileContainer extends Component {
 

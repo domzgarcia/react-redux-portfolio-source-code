@@ -8,8 +8,8 @@ import {TOGGLE_CARD,
     LOADER_CONTROL,
     ADD_TODO_LOADER,
     
-} from 'Actions/showcase/todos/actionType.js';
-import firebase from 'Services/firebase';
+} from './actionType';
+import firebase from '../services/firebase';
 import v4 from 'uuid/v4';
 import _ from 'lodash';
 

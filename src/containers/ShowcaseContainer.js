@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import 'Containers/showcase/showcase.css';
-
-import 'Containers/showcase/showcase.scss';
+import 'Components/showcase.css';
+import 'Components/showcase.scss';
 
 import todosThumb from 'Src/assets/img/todos.png';
 import chatApp from 'Src/assets/img/chat.png';

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {joinRoom, getServerTime, changeScene, addRoom, emptyRooms, emptyMessagesByRoomId,fetchRooms} from 'Actions/showcase/chat/action.js';
-import {SCENE_CHATROOM} from 'Actions/showcase/chat/actionType';
-import chatAppFirebase from 'Services/chatAppFirebase';
+import {joinRoom, getServerTime, changeScene, addRoom, emptyRooms, emptyMessagesByRoomId,fetchRooms} from '../actions/action';
+import {SCENE_CHATROOM} from '../actions/actionType';
+import chatAppFirebase from '../services/chatAppFirebase';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp';
-import ChatRoomListSkeletonComp from '../../../components/showcase/chat/ChatRoomListSkeletonComp';
+import ChatRoomListSkeletonComp from '../components/ChatRoomListSkeletonComp';
 
 class ChatRoomListContainer extends Component {
     constructor(props){

@@ -8,11 +8,11 @@ import {createMessage,
     addUserClient,
     emptyVisitorCount,
     getServerTime
-} from 'Actions/showcase/chat/action.js';
+} from '../actions/action';
 
-import ChatRoomMessage from 'Containers/showcase/chat/ChatRoomMessage.js';
+import ChatRoomMessage from './ChatRoomMessage';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp'; 
-import chatAppFirebase from 'Services/chatAppFirebase';
+import chatAppFirebase from '../services/chatAppFirebase';
 import moment from 'moment';
 import _ from 'lodash';
 

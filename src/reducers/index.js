@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 
 // Todo App
-import todoAppUI from 'Reducers/showcase/todos/todoAppUI.js';
-import todos from 'Reducers/showcase/todos/todos.js';
+import todoAppUI from '../showcase/todos/reducers/todoAppUI';
+import todos from '../showcase/todos/reducers/todos';
 
 // Chat App
-import chatStore from 'Reducers/showcase/chat/chatStore.js';
+import chatStore from '../showcase/chat/reducers/chatStore';
 
 export default combineReducers({
     // todoapp

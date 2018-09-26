@@ -1,4 +1,4 @@
-import {TOGGLE_CARD, TODO_FILTER_CHANGE, LOADER_CONTROL, ADD_TODO_LOADER} from 'Actions/showcase/todos/actionType.js';
+import {TOGGLE_CARD, TODO_FILTER_CHANGE, LOADER_CONTROL, ADD_TODO_LOADER} from '../actions/actionType';
 
 const todoAppUI = (state={}, {type, payload}) => {
     switch(type){

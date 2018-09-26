@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'react-router-dom/Link';
 
-import {toggleCard, addTodo, addTodoLoader, fetchFromFirebase} from 'Actions/showcase/todos/action.js';
+import {toggleCard, addTodo, addTodoLoader, fetchFromFirebase} from '../actions/action';
 
-import TodoFormComp from 'Components/showcase/todos/TodoFormComp.js';
-import TodoListContainer from 'Containers/showcase/todos/TodoListContainer.js';
-import TodoFilterContainer from 'Containers/showcase/todos/TodoFilterContainer.js';
+import TodoFormComp from '../components/TodoFormComp';
+import TodoListContainer from './TodoListContainer';
+import TodoFilterContainer from './TodoFilterContainer';
 
 class TodoAppContainer extends Component {
     constructor(props){

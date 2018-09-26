@@ -16,7 +16,7 @@ import { USER_AUTH,
     EMPTY_USER_CONNECTIONS,
     ADD_USER_CONNECTED,
     ADD_VISITOR_COUNT,
-    EMPTY_VISITOR_COUNT} from "Actions/showcase/chat/actionType";
+    EMPTY_VISITOR_COUNT} from "../actions/actionType";
 
 let initialState =  {
     appUI: {

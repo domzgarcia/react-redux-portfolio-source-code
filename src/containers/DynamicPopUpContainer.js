@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import Link from 'react-router-dom/Link';
 
 import 'Src/assets/layouts/popup.scss';
-import ChatCreateRoomContainer from 'Containers/showcase/chat/ChatCreateRoomContainer.js';
-import { POPUP_CREATE_ROOM } from 'Actions/showcase/chat/actionType.js';
-import { closeOpenPopup } from 'Actions/showcase/chat/action.js';
+import ChatCreateRoomContainer from '../showcase/chat/containers/ChatCreateRoomContainer';
+import { POPUP_CREATE_ROOM } from '../showcase/chat/actions/actionType';
+import { closeOpenPopup } from '../showcase/chat/actions/action';
 
 class DynamicPopUpContainer extends Component {
     constructor(props){

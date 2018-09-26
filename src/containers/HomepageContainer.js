@@ -12,7 +12,7 @@ import AboutContainer from 'Containers/AboutContainer.js';
 import ContactUsContainer from 'Containers/ContactUsContainer.js';
 import DashboardContainer from 'Containers/DashboardContainer';
 
-import showcaseRoutes from 'Components/showcase';
+import showcaseRoutes from '../components';
 
 class HomepageContainer extends Component {
     constructor(props){

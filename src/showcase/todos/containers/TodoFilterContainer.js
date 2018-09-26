@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {todoFilterChangeTo} from 'Actions/showcase/todos/action.js';
+import {todoFilterChangeTo} from '../actions/action';
 
 import {TODO_FILTER_ALL,
     TODO_FILTER_PENDING,
-    TODO_FILTER_DONE} from 'Actions/showcase/todos/actionType.js';
+    TODO_FILTER_DONE} from '../actions/actionType';
 
 class TodoFilterContainer extends Component {
     constructor(props){

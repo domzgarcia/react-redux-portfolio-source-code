@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import 'Components/showcase/todos/todo-item.css';
-import {markedAsDone, editTodo, deleteTodo} from 'Actions/showcase/todos/action.js';
+import '../components/todo-item.css';
+import {markedAsDone, editTodo, deleteTodo} from '../actions/action';
 import FlickrLoaderComp from 'Components/FlickrLoaderComp.js';
 
 class TodoListItemContainer extends Component {

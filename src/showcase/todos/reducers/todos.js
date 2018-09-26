@@ -1,4 +1,4 @@
-import { ADD_TODO, MARKED_AS_DONE, EDIT_TODO, DELETE_TODO, FIREBASE_FETCH_ALL } from "Actions/showcase/todos/actionType.js";
+import { ADD_TODO, MARKED_AS_DONE, EDIT_TODO, DELETE_TODO, FIREBASE_FETCH_ALL } from "../actions/actionType";
 import v4 from 'uuid/v4';
 import _ from 'lodash';
 

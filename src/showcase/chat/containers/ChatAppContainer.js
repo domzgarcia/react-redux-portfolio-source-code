@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'react-router-dom/Link';
-import ChatProfileContainer from 'Containers/showcase/chat/ChatProfileContainer.js';
-import ChatHeaderContainer from 'Containers/showcase/chat/ChatHeaderContainer.js';
-import ChatRoomContainer from 'Containers/showcase/chat/ChatRoomContainer.js';
+import ChatProfileContainer from './ChatProfileContainer';
+import ChatHeaderContainer from './ChatHeaderContainer';
+import ChatRoomContainer from './ChatRoomContainer';
 
-import {manageGoogleUser} from 'Actions/showcase/chat/action.js';
-import chatAppFirebase from 'Services/chatAppFirebase.js';
+import {manageGoogleUser} from '../actions/action';
+import chatAppFirebase from '../services/chatAppFirebase';
 
 /**
  * Start Project: Sept 11 2018

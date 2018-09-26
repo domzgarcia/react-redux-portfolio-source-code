@@ -15,7 +15,7 @@ import {
     SET_SERVER_TIME,
     ADD_VISITOR_COUNT,
     EMPTY_VISITOR_COUNT
-} from "Actions/showcase/chat/actionType.js";
+} from "./actionType";
 
 import _ from 'lodash';
 

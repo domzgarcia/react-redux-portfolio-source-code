@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {addNewRoom, closeOpenPopup} from 'Actions/showcase/chat/action.js';
+import {addNewRoom, closeOpenPopup} from '../actions/action';
 
 class ChatCreateRoomContainer extends Component {
     constructor(props){
