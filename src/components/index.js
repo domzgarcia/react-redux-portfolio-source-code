@@ -1,8 +1,10 @@
 import React from 'react';
 import {Route, Switch} from 'react-router';
-import TodoAppContainer from '../showcase/todos/containers/TodoAppContainer';
-import ShowcaseContainer from '../containers/ShowcaseContainer';
-import ChatAppContainer from '../showcase/chat/containers/ChatAppContainer';
+import asyncRoute from '../utilities/asyncRoute';
+
+const ShowcaseContainer = asyncRoute( () => import('../containers/ShowcaseContainer'));
+const TodoAppContainer  = asyncRoute( () => import('../showcase/todos/containers/TodoAppContainer'));
+const ChatAppContainer  = asyncRoute( () => import('../showcase/chat/containers/ChatAppContainer'));
 
 const showcaseRoutes = (
     <Switch>

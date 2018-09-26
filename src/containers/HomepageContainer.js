@@ -3,16 +3,16 @@ import {connect} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 
 import logo from '../logo.svg';
-import '../App.css';
 
 import HeaderContainer from 'Containers/HeaderContainer.js';
 import FooterContainer from 'Containers/FooterContainer.js';
 
-import AboutContainer from 'Containers/AboutContainer.js';
-import ContactUsContainer from 'Containers/ContactUsContainer.js';
-import DashboardContainer from 'Containers/DashboardContainer';
-
 import showcaseRoutes from '../components';
+import asyncRoute from '../utilities/asyncRoute';
+
+const DashboardContainer = asyncRoute( () => import('Containers/DashboardContainer.js'));
+const AboutContainer = asyncRoute( () => import('Containers/AboutContainer.js'));
+const ContactUsContainer = asyncRoute( () => import('Containers/ContactUsContainer.js'));
 
 class HomepageContainer extends Component {
     constructor(props){

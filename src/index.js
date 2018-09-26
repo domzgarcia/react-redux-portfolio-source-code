@@ -4,14 +4,16 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
-
+import registerServiceWorker from './registerServiceWorker';
+import asyncRoute from './utilities/asyncRoute';
 // Import css here
 import './index.css';
+import './App.css';
+import './components/showcase.css';
+import './components/showcase.scss';
 
-// Landing page
-import HomepageContainer from 'Containers/HomepageContainer.js';
+const HomepageContainer = asyncRoute( () => import('Containers/HomepageContainer.js'));
 
-import registerServiceWorker from './registerServiceWorker';
 registerServiceWorker();
 
 const targetRoot = document.querySelector('#root');
