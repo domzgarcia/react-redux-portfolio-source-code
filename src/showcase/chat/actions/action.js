@@ -23,6 +23,7 @@ import axios from 'axios';
 
 // const baseUrl = 'https://us-central1-myspace-a310c.cloudfunctions.net';
 // const baseUrl = 'https://domz-garcia.tk';
+
 const baseUrl = 'https://myspace-a310c.firebaseapp.com/';
 
 export const manageGoogleUser = (bool = false, userData = {}) => {

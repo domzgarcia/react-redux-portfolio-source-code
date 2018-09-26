@@ -17,9 +17,10 @@
     max-width: 100%;
     position: relative;
 }
-.-custom-chat-width {
-    max-width: 900px;
+.container.-custom-chat-width {
+    max-width: 900px !important;
     width: 100%;
+    margin: 20px auto 20px;
 }
 .chat-navigation {
     padding: 10px;

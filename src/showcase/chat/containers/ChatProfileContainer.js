@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import '../components/main.scss';
+
 import chatAppFirebase from '../services/chatAppFirebase';
 import {addNewUser} from '../actions/action';
 

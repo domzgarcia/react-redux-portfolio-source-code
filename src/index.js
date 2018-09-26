@@ -11,6 +11,7 @@ import './index.css';
 import './App.css';
 import './components/showcase.css';
 import './components/showcase.scss';
+import './showcase/chat/components/chatmain.scss';
 
 const HomepageContainer = asyncRoute( () => import('Containers/HomepageContainer.js'));
 
