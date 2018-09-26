@@ -59,12 +59,12 @@ class ChatAppContainer extends Component {
                         <p className="title"><strong>Project description:</strong></p>
                         <div className="body">
                             <p> Simple chat prototype venturing in quite complex async calls. Integrated to firebase Functions and ExpressJS
-                                basic server setup. I learned async await, promises and some basic firebase admin.database APIs. Skeleton loader example
+                                basic server setup. I have learned async-await, promises and some basic firebase admin.database APIs. Skeleton loader example
                                 for good UI/UX support.
                                 <br />
                                 <br />
                                 <a href="javascript:void(0);" className="-dullbadge">#react-redux</a>
-                                <a href="javascript:void(0);" className="-dullbadge">#Google-0Auth</a>
+                                <a href="javascript:void(0);" className="-dullbadge">#Google-SignIn</a>
                                 <a href="javascript:void(0);" className="-dullbadge">#firebase-functions</a>
                                 <a href="javascript:void(0);" className="-dullbadge">#ExpressJS</a>
                                 <a href="javascript:void(0);" className="-dullbadge">#Async-Await-Promises</a>

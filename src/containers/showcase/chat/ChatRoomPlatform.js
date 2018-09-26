@@ -173,18 +173,22 @@ class ChatRoomPlatform extends Component {
                         </div> */}
 
                         <ul className="visitors">
-                           {userConnections.map( (user, idx) => {
+                           {userConnections
+                            .sort((a, b) => {
+                                return b.createdAt - a.createdAt;
+                            })
+                            .map( (user, idx) => {
                                 return (
-                                    <li key={idx}>
-                                        <div className="visitorDisplay">
-                                            <div className="name">
-                                                <div>{user.displayName}</div>
-                                                <div>
-                                                    <small>{this.computeServerTime(user.createdAt, serverTime)}</small>
-                                                </div>
+                                <li key={idx}>
+                                    <div className="visitorDisplay">
+                                        <div className="name">
+                                            <div>{user.displayName}</div>
+                                            <div>
+                                                <small>{this.computeServerTime(user.createdAt, serverTime)}</small>
                                             </div>
                                         </div>
-                                    </li>)
+                                    </div>
+                                </li>)
                             })}
                         </ul>
                     </div>

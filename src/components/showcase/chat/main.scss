@@ -325,3 +325,30 @@
 .lbl-newConvi.-active {
     display: block;
 }
+
+.-red {
+    color: red;
+}
+
+.create-room-popup {
+    text-align: left;
+    .error {
+        color: red;
+        display: none;
+    }
+    .error.-active {
+        display: inline-block;
+    }
+    .form-lbl,
+    .form-input {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+    }
+    .form-input {
+        padding: 5px;
+    }
+    .form-btn-wrap {
+        text-align: center;
+    }
+}

@@ -80,8 +80,9 @@ h1,h2,h3,h4,h5 {
   display: inline-block;
   color: #444;
   border-radius: 20px;
-  margin: 0 2px;
+  margin: 0 2px 4px;
   background-color: #ddd;
+
 }
 .-dullbadge:hover,
 .-dullbadge:visited,

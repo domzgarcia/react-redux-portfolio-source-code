@@ -77,8 +77,9 @@ class TodoAppContainer extends Component {
                     <div className="inject-project-details">
                         <p className="title"><strong>Project description:</strong></p>
                         <div className="body">
-                            <p> Simple todo app done in React-Redux, my first handson pet project with these libraries. 
-                                Basic CRUD functionality with basic integration to firebase RESTful API.
+                            <p> Simple todo app done in React-Redux, my first hands-on project with these js libraries. 
+                                Todo app is a best example to implement CRUD features after knowing how to make a "Hello World".
+                                It also has some basic integration to firebase RESTful API for temporary database.
                                 <br />
                                 <br />
                                 <a href="javascript:void(0);" className="-dullbadge">#react</a>
