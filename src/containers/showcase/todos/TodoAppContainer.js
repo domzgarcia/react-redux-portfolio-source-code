@@ -51,7 +51,7 @@ class TodoAppContainer extends Component {
             
                 <div className="container -top-bottom-gutter align-left">
                     
-                    <Link to="/showcase" className="btn btn-back ">&#8678;back</Link>
+                    {/* <Link to="/showcase" className="btn btn-back ">&#8678;back</Link> */}
                     <div className="clearfix"></div>
                     <div className="app-sample">
                         <div className="top-nav">
@@ -78,7 +78,7 @@ class TodoAppContainer extends Component {
                         <p className="title"><strong>Project description:</strong></p>
                         <div className="body">
                             <p> Simple todo app done in React-Redux, my first hands-on project with these js libraries. 
-                                Todo app is a best example to implement CRUD features after knowing how to make a "Hello World".
+                                Todo app is one of the best example to implement Create, Read, Update, Delete (C.R.U.D.) functionality right after knowing how to make a "Hello World".
                                 It also has some basic integration to firebase RESTful API for temporary database.
                                 <br />
                                 <br />

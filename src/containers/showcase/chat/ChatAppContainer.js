@@ -58,8 +58,8 @@ class ChatAppContainer extends Component {
                     <div className="inject-project-details">
                         <p className="title"><strong>Project description:</strong></p>
                         <div className="body">
-                            <p> Simple chat prototype venturing in quite complex async calls. Integrated to firebase Functions and ExpressJS
-                                basic server setup. I have learned async-await, promises and some basic firebase admin.database APIs. Skeleton loader example
+                            <p> Simple chat prototype venturing in a quite complex async calls using redux-thunk. Integrated to firebase Functions and ExpressJS
+                                basic server setup. I have learned async-await, promises, es6 and some basic firebase admin.database APIs. Skeleton loader example
                                 for good UI/UX support.
                                 <br />
                                 <br />
